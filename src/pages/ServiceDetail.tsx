@@ -1,14 +1,19 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 
 const ServiceDetail = () => {
   const { service } = useParams();
+  const navigate = useNavigate();
 
   const handleWhatsAppContact = () => {
     const phoneNumber = '96176331818';
     const message = encodeURIComponent(`Hi! I'm interested in your ${serviceData[service || '']?.title || 'service'}. Please provide more information.`);
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+  };
+
+  const handleShowCCTVProducts = () => {
+    navigate('/products/cctv');
   };
 
   const serviceData: Record<string, any> = {
@@ -156,7 +161,7 @@ const ServiceDetail = () => {
       title: 'CCTV Installation',
       description: 'Professional CCTV system installation and configuration services',
       details: [
-        'Site security assessment and planning',
+        'Site survey and planning',
         'Professional camera installation and positioning',
         'DVR/NVR system setup and configuration',
         'Remote viewing setup for mobile and desktop',
@@ -262,6 +267,13 @@ const ServiceDetail = () => {
               ) : (
                 <p className="text-gray-600">Service process details coming soon.</p>
               )}
+              {/* Sponsor logos for CCTV service under Our Process */}
+              {service === 'cctv-installation' && (
+                <div className="flex items-center justify-center gap-8 mt-8">
+                  <img src="/images/dahua.png" alt="Dahua Logo" className="h-20 object-contain" />
+                  <img src="/images/hikvision.png" alt="Hikvision Logo" className="h-20 object-contain" />
+                </div>
+              )}
             </div>
 
             {/* Service Features */}
@@ -281,6 +293,16 @@ const ServiceDetail = () => {
               )}
               
               <div className="mt-8">
+                {/* Show CCTV Products button only for CCTV service */}
+                {service === 'cctv-installation' && (
+                  <button
+                    onClick={handleShowCCTVProducts}
+                    className="w-full mb-4 bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center space-x-2"
+                  >
+                    <span>📷</span>
+                    <span>Show CCTV Products</span>
+                  </button>
+                )}
                 <button
                   onClick={handleWhatsAppContact}
                   className="w-full bg-green-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-600 transition-colors duration-200 flex items-center justify-center space-x-2"

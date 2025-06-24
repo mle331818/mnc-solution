@@ -110,12 +110,9 @@ const Products = () => {
                   <h3 className="text-xl font-bold text-gray-900 mb-2">
                     {category.name}
                   </h3>
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-gray-600">
                     {category.description}
                   </p>
-                  <div className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 text-center">
-                    Browse Category
-                  </div>
                 </div>
               </Link>
             ))}
