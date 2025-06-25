@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
@@ -96,7 +95,7 @@ const Services = () => {
       {/* Services Grid */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {serviceCategories.map((service, index) => (
               <Link
                 key={index}
@@ -108,25 +107,25 @@ const Services = () => {
                   <img
                     src={service.image}
                     alt={service.name}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                    className="w-full h-32 sm:h-48 object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                <div className="p-3 sm:p-6">
+                  <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">
                     {service.name}
                   </h3>
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-xs sm:text-gray-600 sm:text-base mb-2 sm:mb-4">
                     {service.description}
                   </p>
-                  <ul className="space-y-2 mb-6">
+                  <ul className="space-y-1 sm:space-y-2 mb-3 sm:mb-6">
                     {service.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center text-sm text-gray-600">
+                      <li key={idx} className="flex items-center text-xs sm:text-sm text-gray-600">
                         <span className="w-2 h-2 bg-blue-600 rounded-full mr-2"></span>
                         {feature}
                       </li>
                     ))}
                   </ul>
-                  <div className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200 text-center">
+                  <div className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200 text-center text-xs sm:text-base">
                     Learn More
                   </div>
                 </div>
