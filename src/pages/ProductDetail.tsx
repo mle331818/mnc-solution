@@ -542,7 +542,7 @@ const ProductDetail = () => {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {currentProduct.products.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {currentProduct.products.map((product: any, index: number) => (
                 <div
                   key={index}
@@ -552,30 +552,30 @@ const ProductDetail = () => {
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-48 object-cover"
+                    className="w-full h-32 sm:h-48 object-cover"
                   />
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  <div className="p-3 sm:p-6">
+                    <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">
                       {product.name}
                     </h3>
-                    <p className="text-gray-600 mb-4">
+                    <p className="text-xs sm:text-gray-600 sm:text-base mb-2 sm:mb-4">
                       {product.description}
                     </p>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-2xl font-bold text-blue-600">
+                    <div className="flex items-center justify-between mb-2 sm:mb-4">
+                      <span className="text-lg sm:text-2xl font-bold text-blue-600">
                         {product.price}
                       </span>
                     </div>
                     <button
                       onClick={() => handleWhatsAppOrder(product.name, product.price)}
-                      className="w-full bg-green-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-green-600 transition-colors duration-200 flex items-center justify-center space-x-2"
+                      className="w-full bg-green-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-green-600 transition-colors duration-200 flex items-center justify-center space-x-2 text-xs sm:text-base"
                     >
                       <span>💬</span>
                       <span>Buy on WhatsApp</span>
                     </button>
                     <button
                       onClick={() => handleAddToCart(product)}
-                      className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-200 flex items-center justify-center space-x-2 mt-2"
+                      className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-200 flex items-center justify-center space-x-2 mt-2 text-xs sm:text-base"
                     >
                       <span>🛒</span>
                       <span>Add to Cart</span>
