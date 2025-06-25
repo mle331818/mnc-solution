@@ -1,10 +1,11 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ShoppingCart } from 'lucide-react';
+import { useCart } from '../contexts/CartContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { state } = useCart();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -28,7 +29,7 @@ const Header = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden md:flex space-x-8 items-center">
             {navItems.map((item) => (
               <Link
                 key={item.name}
@@ -38,6 +39,19 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
+            {/* Cart Button */}
+            <Link
+              to="/cart"
+              className="relative flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors duration-200 hover:scale-105"
+              aria-label="View cart"
+            >
+              <ShoppingCart size={22} />
+              {state.totalItems > 0 && (
+                <span className="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                  {state.totalItems}
+                </span>
+              )}
+            </Link>
           </nav>
 
           {/* Mobile menu button */}
@@ -63,6 +77,21 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
+              {/* Cart Button for Mobile */}
+              <Link
+                to="/cart"
+                className="relative flex items-center px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-600 transition-colors duration-200"
+                aria-label="View cart"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <ShoppingCart size={22} />
+                {state.totalItems > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                    {state.totalItems}
+                  </span>
+                )}
+                <span className="ml-2">Cart</span>
+              </Link>
             </div>
           </div>
         )}
