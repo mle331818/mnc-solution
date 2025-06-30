@@ -1,13 +1,20 @@
-import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
 import { useToast } from '../hooks/use-toast';
 import Header from '../components/Header';
+import Barcode from 'react-barcode';
+import { FaWhatsapp, FaFacebookF } from 'react-icons/fa';
 
 const ProductDetail = () => {
-  const { category } = useParams();
+  const { category, productId } = useParams();
   const { dispatch } = useCart();
   const { toast } = useToast();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [category, productId]);
 
   const handleWhatsAppOrder = (productName: string, price: string) => {
     const phoneNumber = '96176331818';
@@ -32,49 +39,115 @@ const ProductDetail = () => {
         {
           id: 'cisco-router-2900',
           name: 'Cisco Router 2900',
-          price: '$450',
+          price: 450.00,
+          salePrice: 399.00,
           image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80',
           description: 'Enterprise-grade router with advanced security features',
+          features: [
+            'Gigabit Ethernet',
+            'Advanced security',
+            'VPN support',
+            'Modular design'
+          ],
+          sku: 'CISCO-2900',
+          barcode: '1234567890123',
+          stock: 5,
+          relatedProductIds: ['tp-link-switch-24port', 'ubiquiti-access-point'],
           category: 'network-solution'
         },
         {
           id: 'tp-link-switch-24port',
           name: 'TP-Link Switch 24-Port',
-          price: '$180',
+          price: 180.00,
+          salePrice: 159.00,
           image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80',
           description: '24-port gigabit managed switch for small businesses',
+          features: [
+            '24 Gigabit ports',
+            'Managed switch',
+            'Rack mountable',
+            'Energy efficient'
+          ],
+          sku: 'TPLINK-24G',
+          barcode: '2345678901234',
+          stock: 8,
+          relatedProductIds: ['cisco-router-2900', 'ubiquiti-access-point'],
           category: 'network-solution'
         },
         {
           id: 'ubiquiti-access-point',
           name: 'Ubiquiti Access Point',
-          price: '$120',
+          price: 120.00,
+          salePrice: 99.00,
           image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80',
           description: 'High-performance WiFi 6 access point',
+          features: [
+            'WiFi 6 support',
+            'High coverage',
+            'Easy setup',
+            'Cloud management'
+          ],
+          sku: 'UBNT-AP',
+          barcode: '3456789012345',
+          stock: 12,
+          relatedProductIds: ['cisco-router-2900', 'tp-link-switch-24port'],
           category: 'network-solution'
         },
         {
           id: 'network-cable-cat6',
           name: 'Network Cable Cat6',
-          price: '$0.50/m',
+          price: 0.50,
+          salePrice: 0.40,
           image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80',
           description: 'Cat6 shielded cable for high-speed networking',
+          features: [
+            'Cat6 standard',
+            'Shielded',
+            'High-speed',
+            'Flexible length'
+          ],
+          sku: 'CAT6-CABLE',
+          barcode: '4567890123456',
+          stock: 100,
+          relatedProductIds: ['tp-link-switch-24port'],
           category: 'network-solution'
         },
         {
           id: 'network-cabinet-19inch',
           name: 'Network Cabinet 19"',
-          price: '$350',
+          price: 350.00,
+          salePrice: 299.00,
           image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80',
           description: '19-inch server rack cabinet with cooling',
+          features: [
+            '19-inch rack',
+            'Cooling fan',
+            'Lockable door',
+            'Sturdy build'
+          ],
+          sku: 'CABINET-19',
+          barcode: '5678901234567',
+          stock: 3,
+          relatedProductIds: ['cisco-router-2900'],
           category: 'network-solution'
         },
         {
           id: 'poe-injector-48v',
           name: 'PoE Injector 48V',
-          price: '$25',
+          price: 25.00,
+          salePrice: 20.00,
           image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80',
           description: 'Power over Ethernet injector for cameras and APs',
+          features: [
+            '48V output',
+            'PoE standard',
+            'Compact design',
+            'Plug & play'
+          ],
+          sku: 'POE-48V',
+          barcode: '6789012345678',
+          stock: 15,
+          relatedProductIds: ['ubiquiti-access-point'],
           category: 'network-solution'
         }
       ]
@@ -508,6 +581,34 @@ const ProductDetail = () => {
           image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=400&q=80',
           description: 'Complete CCTV installation package',
           category: 'cctv'
+        },
+        {
+          id: 'dahua-monitor-27',
+          name: 'Dahua 27-inch FHD 100HZ LED Business Monitor DHI-LM27-B201S',
+          price: 110.00,
+          salePrice: 89.00,
+          image: '/images/products/dahua-monitor-27.png',
+          description: '27-inch Full HD monitor, 100Hz refresh rate.',
+          features: [
+            'Screen Size: 27 inches',
+            'Panel Type: IPS',
+            'Aspect Ratio: 16:9',
+            'Resolution: 1920×1080 (Full HD)',
+            'Backlight: LED',
+            'Brightness: 250 cd/㎡ (max)',
+            'Contrast Ratio: 1000:1',
+            'Display Colors: 16.7 million (8-bit)',
+            'Viewing Angle: 178° (Horizontal)/178° (Vertical)',
+            'Response Time: 5ms (typical)',
+            'Refresh Rate: 100Hz (max)',
+            'Inputs: VGA ×1, HDMI ×1',
+            'Built-in Speakers: 1W ×2'
+          ],
+          sku: '1006555',
+          barcode: '6923172545909',
+          stock: 2,
+          relatedProductIds: ['dahua-ups-800va', 'dahua-nvr-1108hs'],
+          category: 'cctv'
         }
       ]
     }
@@ -518,6 +619,109 @@ const ProductDetail = () => {
     description: 'Product details coming soon',
     products: []
   };
+
+  // Find the selected product if productId is present
+  const selectedProduct = productId && category
+    ? productData[category]?.products.find((p: any) => p.id === productId)
+    : null;
+
+  if (productId && selectedProduct) {
+    const isLowStock = selectedProduct.stock && selectedProduct.stock <= 5;
+    return (
+      <div className="min-h-screen bg-neutral-100 flex flex-col items-center py-8 px-2">
+        <Header />
+        <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg flex flex-col md:flex-row overflow-hidden mt-8">
+          {/* Product Image */}
+          <div className="md:w-1/2 w-full flex items-center justify-center bg-neutral-50 p-8 border-b md:border-b-0 md:border-r">
+            <img src={selectedProduct.image} alt={selectedProduct.name} className="w-full max-w-xs h-80 object-contain" />
+          </div>
+          {/* Product Details */}
+          <div className="md:w-1/2 w-full flex flex-col p-6 md:p-10">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 leading-tight">{selectedProduct.name}</h1>
+            <div className="flex items-center gap-3 mb-2">
+              {selectedProduct.salePrice && (
+                <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded text-xs font-semibold">Save {Math.round(100 - (selectedProduct.salePrice / selectedProduct.price) * 100)}%</span>
+              )}
+              <span className="text-lg md:text-2xl font-bold text-gray-900">
+                {selectedProduct.salePrice ? (
+                  <>
+                    <span className="line-through text-gray-400 mr-2">${selectedProduct.price}</span>
+                    <span className="text-red-500">${selectedProduct.salePrice}</span>
+                  </>
+                ) : (
+                  <>${selectedProduct.price}</>
+                )}
+              </span>
+            </div>
+            {isLowStock && (
+              <div className="text-red-600 font-semibold mb-2">Hurry, only {selectedProduct.stock} item{selectedProduct.stock > 1 ? 's' : ''} left in stock!</div>
+            )}
+            <div className="mb-4 text-gray-700 text-base">{selectedProduct.description}</div>
+            {/* Features/Specs */}
+            {selectedProduct.features && (
+              <div className="mb-4">
+                <h2 className="font-semibold text-base mb-1 text-gray-800">Key Features</h2>
+                <ul className="list-disc list-inside text-gray-700 text-sm space-y-1">
+                  {selectedProduct.features.map((feature: string, idx: number) => (
+                    <li key={idx}>{feature}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {/* Info Box */}
+            <div className="mb-4 flex flex-wrap gap-6 items-center">
+              <div className="text-xs text-gray-600"><span className="font-semibold">SKU:</span> {selectedProduct.sku}</div>
+              <div className="flex flex-col items-center">
+                <span className="font-semibold text-xs text-gray-600">Barcode:</span>
+                {selectedProduct.barcode && (
+                  <Barcode value={selectedProduct.barcode} height={40} width={1.5} fontSize={12} displayValue />
+                )}
+              </div>
+              <div className="text-xs text-gray-600">
+                <span className="font-semibold">Stock:</span> {selectedProduct.stock > 0 ? (
+                  <span className="text-green-600 ml-1">In Stock ({selectedProduct.stock})</span>
+                ) : (
+                  <span className="text-red-600 ml-1">Out of Stock</span>
+                )}
+              </div>
+            </div>
+            {/* Action Buttons */}
+            <div className="flex flex-col gap-3 mb-6">
+              <button onClick={() => handleAddToCart(selectedProduct)} className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-200 text-base shadow-md">Add to Cart</button>
+              <button onClick={() => handleWhatsAppOrder(selectedProduct.name, selectedProduct.salePrice || selectedProduct.price)} className="w-full bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition-all duration-200 text-base shadow-md flex items-center justify-center gap-2">
+                <FaWhatsapp className="text-lg" /> Buy on WhatsApp
+              </button>
+            </div>
+            {/* Share Buttons */}
+            <div className="flex gap-3 mb-4 items-center">
+              <span className="text-gray-500 font-medium text-sm">Share:</span>
+              <a href={`https://wa.me/?text=Check%20out%20this%20product%20on%20MyWebsite:%20${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer" className="bg-green-100 text-green-700 p-2 rounded-full hover:bg-green-200 transition-colors"><FaWhatsapp /></a>
+              <a href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`} target="_blank" rel="noopener noreferrer" className="bg-blue-100 text-blue-700 p-2 rounded-full hover:bg-blue-200 transition-colors"><FaFacebookF /></a>
+            </div>
+          </div>
+        </div>
+        {/* Related Products */}
+        {category && (
+          <div className="w-full max-w-4xl mt-12">
+            <h3 className="font-bold text-lg mb-4 text-gray-900">You may also like</h3>
+            <div className="flex gap-6 overflow-x-auto pb-2">
+              {productData[category]?.products
+                .filter((p: any) => p.id !== selectedProduct.id)
+                .map((relProd: any) => (
+                  <div key={relProd.id} className="min-w-[200px] max-w-[220px] bg-white border rounded-lg shadow hover:shadow-lg transition cursor-pointer flex-shrink-0 hover:scale-105 duration-200" onClick={() => navigate(`/products/${category}/${relProd.id}`)}>
+                    <img src={relProd.image} alt={relProd.name} className="h-32 w-full object-contain rounded-t-lg" />
+                    <div className="p-3">
+                      <div className="font-semibold text-sm mb-1 line-clamp-2">{relProd.name}</div>
+                      <div className="text-blue-600 font-bold text-base">{relProd.salePrice ? <><span className='line-through text-gray-400 mr-1'>${relProd.price}</span> <span>${relProd.salePrice}</span></> : <>${relProd.price}</>}</div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -546,8 +750,9 @@ const ProductDetail = () => {
               {currentProduct.products.map((product: any, index: number) => (
                 <div
                   key={index}
-                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-scale-in"
+                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-scale-in cursor-pointer"
                   style={{ animationDelay: `${index * 0.1}s` }}
+                  onClick={() => navigate(`/products/${category}/${product.id}`)}
                 >
                   <img
                     src={product.image}
@@ -563,23 +768,21 @@ const ProductDetail = () => {
                     </p>
                     <div className="flex items-center justify-between mb-2 sm:mb-4">
                       <span className="text-lg sm:text-2xl font-bold text-blue-600">
-                        {product.price}
+                        {product.salePrice ? (
+                          <>
+                            <span className="line-through text-gray-400 mr-2">${product.price}</span>
+                            <span className="text-red-500">${product.salePrice}</span>
+                          </>
+                        ) : (
+                          <>${product.price}</>
+                        )}
                       </span>
+                      {product.salePrice && (
+                        <span className="inline-block bg-red-100 text-red-700 px-2 py-0.5 rounded text-xs font-semibold ml-2">
+                          Save {Math.round(100 - (product.salePrice / product.price) * 100)}%
+                        </span>
+                      )}
                     </div>
-                    <button
-                      onClick={() => handleWhatsAppOrder(product.name, product.price)}
-                      className="w-full bg-green-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-green-600 transition-colors duration-200 flex items-center justify-center space-x-2 text-xs sm:text-base"
-                    >
-                      <span>💬</span>
-                      <span>Buy on WhatsApp</span>
-                    </button>
-                    <button
-                      onClick={() => handleAddToCart(product)}
-                      className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-200 flex items-center justify-center space-x-2 mt-2 text-xs sm:text-base"
-                    >
-                      <span>🛒</span>
-                      <span>Add to Cart</span>
-                    </button>
                   </div>
                 </div>
               ))}
