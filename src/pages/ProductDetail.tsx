@@ -535,8 +535,8 @@ const ProductDetail = () => {
       description: 'Professional security cameras and surveillance systems',
       products: [
         {
-          id: 'hd-security-camera',
-          name: 'HD Security Camera',
+          id: 'Dahua Camera 4mp',
+          name: 'Dahua Camera 4mp',
           price: '$120',
           image: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&w=400&q=80',
           description: '1080P HD security camera with night vision',
