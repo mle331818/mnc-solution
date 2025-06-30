@@ -750,39 +750,64 @@ const ProductDetail = () => {
               {currentProduct.products.map((product: any, index: number) => (
                 <div
                   key={index}
-                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-scale-in cursor-pointer"
+                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 animate-scale-in"
                   style={{ animationDelay: `${index * 0.1}s` }}
-                  onClick={() => navigate(`/products/${category}/${product.id}`)}
                 >
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-32 sm:h-48 object-cover"
-                  />
-                  <div className="p-3 sm:p-6">
-                    <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">
-                      {product.name}
-                    </h3>
-                    <p className="text-xs sm:text-gray-600 sm:text-base mb-2 sm:mb-4">
-                      {product.description}
-                    </p>
-                    <div className="flex items-center justify-between mb-2 sm:mb-4">
-                      <span className="text-lg sm:text-2xl font-bold text-blue-600">
-                        {product.salePrice ? (
-                          <>
-                            <span className="line-through text-gray-400 mr-2">${product.price}</span>
-                            <span className="text-red-500">${product.salePrice}</span>
-                          </>
-                        ) : (
-                          <>${product.price}</>
-                        )}
-                      </span>
-                      {product.salePrice && (
-                        <span className="inline-block bg-red-100 text-red-700 px-2 py-0.5 rounded text-xs font-semibold ml-2">
-                          Save {Math.round(100 - (product.salePrice / product.price) * 100)}%
+                  <div 
+                    className="cursor-pointer"
+                    onClick={() => navigate(`/products/${category}/${product.id}`)}
+                  >
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-32 sm:h-48 object-cover"
+                    />
+                    <div className="p-3 sm:p-6">
+                      <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">
+                        {product.name}
+                      </h3>
+                      <p className="text-xs sm:text-gray-600 sm:text-base mb-2 sm:mb-4">
+                        {product.description}
+                      </p>
+                      <div className="flex items-center justify-between mb-2 sm:mb-4">
+                        <span className="text-lg sm:text-2xl font-bold text-blue-600">
+                          {product.salePrice ? (
+                            <>
+                              <span className="line-through text-gray-400 mr-2">${product.price}</span>
+                              <span className="text-red-500">${product.salePrice}</span>
+                            </>
+                          ) : (
+                            <>${product.price}</>
+                          )}
                         </span>
-                      )}
+                        {product.salePrice && (
+                          <span className="inline-block bg-red-100 text-red-700 px-2 py-0.5 rounded text-xs font-semibold ml-2">
+                            Save {Math.round(100 - (product.salePrice / product.price) * 100)}%
+                          </span>
+                        )}
+                      </div>
                     </div>
+                  </div>
+                  {/* Action Buttons */}
+                  <div className="px-3 sm:px-6 pb-3 sm:pb-6 space-y-2">
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleAddToCart(product);
+                      }}
+                      className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-200 text-sm shadow-md"
+                    >
+                      Add to Cart
+                    </button>
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleWhatsAppOrder(product.name, product.salePrice || product.price);
+                      }}
+                      className="w-full bg-green-500 text-white py-2 rounded-lg font-semibold hover:bg-green-600 transition-all duration-200 text-sm shadow-md flex items-center justify-center gap-2"
+                    >
+                      <FaWhatsapp className="text-sm" /> Buy on WhatsApp
+                    </button>
                   </div>
                 </div>
               ))}
