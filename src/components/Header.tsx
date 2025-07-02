@@ -59,13 +59,24 @@ const Header = () => {
           </form>
 
           {/* Mobile Search Icon */}
-          <button
-            className="md:hidden p-2 rounded-full hover:bg-gray-100 transition-colors mr-2"
-            onClick={() => setShowMobileSearch(true)}
-            aria-label="Open search"
-          >
-            <FaSearch className="text-gray-500 text-xl" />
-          </button>
+          <div className="flex items-center md:hidden gap-1">
+            {/* Mobile menu button */}
+            <button
+              onClick={toggleMenu}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 transition-colors duration-200"
+              aria-label="Open menu"
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+            {/* Mobile Search Icon */}
+            <button
+              className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+              onClick={() => setShowMobileSearch(true)}
+              aria-label="Open search"
+            >
+              <FaSearch className="text-gray-500 text-xl" />
+            </button>
+          </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8 items-center">
@@ -92,14 +103,6 @@ const Header = () => {
               )}
             </Link>
           </nav>
-
-          {/* Mobile menu button */}
-          <button
-            onClick={toggleMenu}
-            className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 transition-colors duration-200"
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
 
         {/* Mobile Search Overlay */}
