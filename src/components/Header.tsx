@@ -2,13 +2,25 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, ShoppingCart } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
+import { FaSearch } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { state } = useCart();
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchTerm.trim() !== '') {
+      navigate(`/search?query=${encodeURIComponent(searchTerm.trim())}`);
+      setSearchTerm('');
+    }
   };
 
   const navItems = [
@@ -27,6 +39,22 @@ const Header = () => {
           <Link to="/" className="flex items-center">
             <h1 className="text-2xl font-bold text-blue-600">MNC Solution</h1>
           </Link>
+
+          {/* Desktop Search Bar */}
+          <form
+            onSubmit={handleSearch}
+            className="hidden md:flex items-center bg-gray-50 rounded-full shadow px-4 py-2 ml-6 w-[340px] max-w-xs focus-within:ring-2 focus-within:ring-blue-400"
+            style={{ minWidth: 220 }}
+          >
+            <FaSearch className="text-gray-400 text-lg mr-2" />
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+              placeholder="Search products..."
+              className="flex-1 bg-transparent border-none outline-none px-2 py-1 text-base"
+            />
+          </form>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8 items-center">

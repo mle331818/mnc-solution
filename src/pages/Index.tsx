@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useCart } from '../contexts/CartContext';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
 import FeaturedSection from '../components/FeaturedSection';
+import { useNavigate } from 'react-router-dom';
+import { FaSearch } from 'react-icons/fa';
 
 const Index = () => {
   const { state, dispatch } = useCart();
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   const handleRemoveFromCart = (productId: string) => {
     dispatch({ type: 'REMOVE_FROM_CART', payload: productId });
@@ -29,12 +33,36 @@ const Index = () => {
 
   const totalPrice = calculateTotalPrice();
 
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchTerm.trim() !== '') {
+      navigate(`/search?query=${encodeURIComponent(searchTerm.trim())}`);
+    }
+  };
+
   return (
     <div className="min-h-screen">
       <Header />
       <Hero />
       <FeaturedSection />
       
+      {/* Beautiful Search Bar at the Top */}
+      <div className="w-full bg-gradient-to-r from-blue-50 to-indigo-100 py-8 shadow-sm">
+        <form onSubmit={handleSearch} className="max-w-2xl mx-auto flex items-center bg-white rounded-full shadow-lg px-4 py-2 gap-2">
+          <FaSearch className="text-gray-400 text-xl ml-2" />
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+            placeholder="Search for any product, brand, or model..."
+            className="flex-1 px-4 py-3 text-lg border-none bg-transparent focus:outline-none rounded-full"
+          />
+          <button type="submit" className="px-6 py-2 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition text-lg shadow">
+            Search
+          </button>
+        </form>
+      </div>
+
       {/* Additional sections for the homepage */}
       <section className="py-16 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
