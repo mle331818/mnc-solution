@@ -9,6 +9,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { state } = useCart();
   const [searchTerm, setSearchTerm] = useState('');
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -20,6 +21,7 @@ const Header = () => {
     if (searchTerm.trim() !== '') {
       navigate(`/search?query=${encodeURIComponent(searchTerm.trim())}`);
       setSearchTerm('');
+      setShowMobileSearch(false);
     }
   };
 
@@ -56,6 +58,15 @@ const Header = () => {
             />
           </form>
 
+          {/* Mobile Search Icon */}
+          <button
+            className="md:hidden p-2 rounded-full hover:bg-gray-100 transition-colors mr-2"
+            onClick={() => setShowMobileSearch(true)}
+            aria-label="Open search"
+          >
+            <FaSearch className="text-gray-500 text-xl" />
+          </button>
+
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8 items-center">
             {navItems.map((item) => (
@@ -90,6 +101,33 @@ const Header = () => {
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
+
+        {/* Mobile Search Overlay */}
+        {showMobileSearch && (
+          <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-start justify-center" onClick={() => setShowMobileSearch(false)}>
+            <form
+              onSubmit={handleSearch}
+              className="w-full max-w-md mx-auto mt-8 bg-white rounded-full shadow-lg flex items-center px-4 py-3 gap-2 relative"
+              onClick={e => e.stopPropagation()}
+            >
+              <FaSearch className="text-gray-400 text-xl ml-2" />
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+                placeholder="Search products..."
+                className="flex-1 px-4 py-2 text-lg border-none bg-transparent focus:outline-none rounded-full"
+                autoFocus
+              />
+              <button type="submit" className="px-6 py-2 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition text-lg shadow">
+                Search
+              </button>
+              <button type="button" className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600" onClick={() => setShowMobileSearch(false)} aria-label="Close search">
+                <X size={22} />
+              </button>
+            </form>
+          </div>
+        )}
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
