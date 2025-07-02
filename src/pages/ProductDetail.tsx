@@ -4,7 +4,7 @@ import { useCart } from '../contexts/CartContext';
 import { useToast } from '../hooks/use-toast';
 import Header from '../components/Header';
 import Barcode from 'react-barcode';
-import { FaWhatsapp, FaFacebookF } from 'react-icons/fa';
+import { FaWhatsapp, FaFacebookF, FaSearch } from 'react-icons/fa';
 
 // Place productData here, outside and above the component
 export const productData: Record<string, any> = {
@@ -882,13 +882,31 @@ const ProductDetail = () => {
 
       {/* Search Box */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-4">
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
-          placeholder="Search products by name, model, or description..."
-          className="w-full max-w-md px-4 py-2 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
+        <form
+          onSubmit={e => {
+            e.preventDefault();
+            if (searchTerm.trim() !== '') {
+              navigate(`/search?query=${encodeURIComponent(searchTerm.trim())}`);
+              setSearchTerm('');
+            }
+          }}
+          className="w-full max-w-md mx-auto flex items-center bg-gray-100 rounded-full px-4 py-2 shadow focus-within:ring-2 focus-within:ring-blue-400"
+        >
+          <FaSearch className="text-gray-400 text-lg mr-2" />
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+            placeholder="Search products by name, model, or description..."
+            className="flex-1 bg-transparent border-none outline-none px-2 py-1 text-base"
+          />
+          <button
+            type="submit"
+            className="ml-2 px-5 py-2 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition shadow"
+          >
+            Go
+          </button>
+        </form>
       </div>
 
       {/* Brand Cards */}

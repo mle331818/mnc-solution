@@ -1,6 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+import { FaSearch } from 'react-icons/fa';
 
 const Products = () => {
   const productCategories = [
@@ -68,6 +69,17 @@ const Products = () => {
       slug: 'automation-system'
     }
   ];
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchTerm.trim() !== '') {
+      navigate(`/search?query=${encodeURIComponent(searchTerm.trim())}`);
+      setSearchTerm('');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
