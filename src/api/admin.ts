@@ -1,6 +1,5 @@
 import { Product } from "../types";
-
-const API_BASE = import.meta.env.VITE_API_BASE ?? "http://localhost:5000";
+import { API_BASE } from "@/lib/getApiBase";
 
 export async function login(username: string, password: string) {
   // Hard-coded client-side credentials (admin/admin123)
