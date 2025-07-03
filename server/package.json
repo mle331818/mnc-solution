@@ -1,0 +1,14 @@
+{
+  "name": "admin-backend",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.2",
+    "morgan": "^1.10.0",
+    "vite_react_shadcn_ts": "file:.."
+  }
+}
