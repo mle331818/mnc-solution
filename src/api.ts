@@ -9,8 +9,8 @@ const getApiBaseUrl = () => {
   
   // Fallback to environment-based logic
   if (import.meta.env.PROD) {
-    // Use your actual Vercel backend deployment URL
-    return "https://mnc-solution-backend.vercel.app/api";
+    // Use the same domain for both frontend and backend
+    return "https://mnc-solution.vercel.app/api";
   }
   return "http://localhost:4000/api";
 };
