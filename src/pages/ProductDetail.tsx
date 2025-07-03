@@ -4,7 +4,7 @@ import { useCart } from '../contexts/CartContext';
 import { useToast } from '../hooks/use-toast';
 import Header from '../components/Header';
 import Barcode from 'react-barcode';
-import { FaWhatsapp, FaFacebookF, FaSearch } from 'react-icons/fa';
+import { FaWhatsapp, FaFacebookF, FaSearch, FaArrowLeft, FaStar, FaTruck, FaShieldAlt, FaEye, FaShoppingCart } from 'react-icons/fa';
 import { useProducts } from '../hooks/use-products';
 import { useProduct } from '../hooks/use-product';
 
@@ -76,236 +76,279 @@ const ProductDetail = () => {
 
   if (productLoading) {
     return (
-      <div className="min-h-screen bg-neutral-100 flex items-center justify-center">
-        <p>Loading product...</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading product...</p>
+        </div>
       </div>
     );
   }
 
-  if (productId && selectedProduct) {
-    const isLowStock = selectedProduct.stock && selectedProduct.stock <= 5;
+  if (!selectedProduct) {
     return (
-      <div className="min-h-screen bg-neutral-100 flex flex-col items-center py-8 px-2">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         <Header />
-        <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg flex flex-col md:flex-row overflow-hidden mt-8">
-          {/* Product Image */}
-          <div className="md:w-1/2 w-full flex items-center justify-center bg-neutral-50 p-8 border-b md:border-b-0 md:border-r">
-            <img src={selectedProduct.image} alt={selectedProduct.name} className="w-full max-w-xs h-80 object-contain" />
-          </div>
-          {/* Product Details */}
-          <div className="md:w-1/2 w-full flex flex-col p-6 md:p-10">
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 leading-tight">{selectedProduct.name}</h1>
-            <div className="flex items-center gap-3 mb-2">
-              <span className="text-lg md:text-2xl font-bold text-gray-900">
-                ${selectedProduct.price}
-              </span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+          <div className="max-w-md mx-auto">
+            <div className="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
+              <FaEye className="w-12 h-12 text-gray-400" />
             </div>
-            {isLowStock && (
-              <div className="text-red-600 font-semibold mb-2">Hurry, only {selectedProduct.stock} item{selectedProduct.stock > 1 ? 's' : ''} left in stock!</div>
-            )}
-            <div className="mb-4 text-gray-700 text-base">{selectedProduct.description}</div>
-            {/* Info Box */}
-            <div className="mb-4 flex flex-wrap gap-6 items-center">
-              <div className="text-xs text-gray-600">
-                <span className="font-semibold">Stock:</span> {selectedProduct.stock > 0 ? (
-                  <span className="text-green-600 ml-1">In Stock ({selectedProduct.stock})</span>
-                ) : (
-                  <span className="text-red-600 ml-1">Out of Stock</span>
-                )}
-              </div>
-            </div>
-            {/* Action Buttons */}
-            <div className="flex flex-col gap-3 mb-6">
-              <button onClick={() => handleAddToCart(selectedProduct)} className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-200 text-base shadow-md">Add to Cart</button>
-              <button onClick={() => handleWhatsAppOrder(selectedProduct.name, selectedProduct.price)} className="w-full bg-green-500 text-white py-3 rounded-lg font-semibold hover:bg-green-600 transition-all duration-200 text-base shadow-md flex items-center justify-center gap-2">
-                <FaWhatsapp className="text-lg" /> Buy on WhatsApp
-              </button>
-            </div>
-            {/* Share Buttons */}
-            <div className="flex gap-3 mb-4 items-center">
-              <span className="text-gray-500 font-medium text-sm">Share:</span>
-              <a href={`https://wa.me/?text=Check%20out%20this%20product%20on%20MyWebsite:%20${encodeURIComponent(window.location.href)}`} target="_blank" rel="noopener noreferrer" className="bg-green-100 text-green-700 p-2 rounded-full hover:bg-green-200 transition-colors"><FaWhatsapp /></a>
-              <a href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`} target="_blank" rel="noopener noreferrer" className="bg-blue-100 text-blue-700 p-2 rounded-full hover:bg-blue-200 transition-colors"><FaFacebookF /></a>
-            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">Product Not Found</h3>
+            <p className="text-gray-600 mb-6">
+              The product you're looking for doesn't exist or has been removed.
+            </p>
+            <Link
+              to="/products"
+              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-colors"
+            >
+              Browse All Products
+            </Link>
           </div>
         </div>
-        {/* Related Products */}
-        {category && (
-          <div className="w-full max-w-4xl mt-12">
-            <h3 className="font-bold text-lg mb-4 text-gray-900">You may also like</h3>
-            <div className="flex gap-6 overflow-x-auto pb-2">
-              {currentProducts
-                .filter((p: any) => p._id !== selectedProduct._id)
-                .map((relProd: any) => (
-                  <div key={relProd._id} className="min-w-[200px] max-w-[220px] bg-white border rounded-lg shadow hover:shadow-lg transition cursor-pointer flex-shrink-0 hover:scale-105 duration-200" onClick={() => navigate(`/products/${category}/${relProd._id}`)}>
-                    <img src={relProd.image} alt={relProd.name} className="h-32 w-full object-contain rounded-t-lg" />
-                    <div className="p-3">
-                      <div className="font-semibold text-sm mb-1 line-clamp-2">{relProd.name}</div>
-                      <div className="text-blue-600 font-bold text-base">${relProd.price}</div>
-                    </div>
-                  </div>
-                ))}
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  if (categoryLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p>Loading products...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link to="/products" className="inline-flex items-center text-blue-200 hover:text-white mb-4">
-            ← Back to Products
+      <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }}></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <Link to="/products" className="inline-flex items-center text-white/80 hover:text-white mb-6 transition-colors group">
+            <FaArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
+            Back to Products
           </Link>
           <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-fade-in capitalize">
-            {category}
+            {category?.replace('-', ' ')}
           </h1>
-          <p className="text-xl mb-8 animate-fade-in">
-            Browse our selection of {category} products
+          <p className="text-xl mb-8 animate-fade-in text-white/90">
+            Browse our selection of {category?.replace('-', ' ')} products
           </p>
         </div>
       </section>
 
-      {/* Search Box */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-4">
-        <form
-          onSubmit={e => {
-            e.preventDefault();
-            if (searchTerm.trim() !== '') {
-              navigate(`/search?query=${encodeURIComponent(searchTerm.trim())}`);
-            }
-          }}
-          className="relative"
-        >
-          <input
-            type="text"
-            placeholder="Search products..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-          <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
-        </form>
-      </div>
+      {/* Search and Filters Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
+          {/* Search Box */}
+          <form
+            onSubmit={e => {
+              e.preventDefault();
+              if (searchTerm.trim() !== '') {
+                navigate(`/search?query=${encodeURIComponent(searchTerm.trim())}`);
+              }
+            }}
+            className="relative mb-6"
+          >
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-xl focus:ring-4 focus:ring-blue-300 focus:border-transparent text-lg"
+            />
+            <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl" />
+          </form>
 
-      {/* Brand Filters for CCTV */}
-      {category === 'cctv' && (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => setShowDahuaOnly(!showDahuaOnly)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                showDahuaOnly ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
-            >
-              Dahua
-            </button>
-            <button
-              onClick={() => setShowHikvisionOnly(!showHikvisionOnly)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                showHikvisionOnly ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
-            >
-              Hikvision
-            </button>
-            <button
-              onClick={() => setShowXiaomiOnly(!showXiaomiOnly)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                showXiaomiOnly ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
-            >
-              Xiaomi
-            </button>
-            <button
-              onClick={() => setShowTplinkOnly(!showTplinkOnly)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                showTplinkOnly ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
-            >
-              TP-Link
-            </button>
-            <button
-              onClick={() => setShowTuyaOnly(!showTuyaOnly)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                showTuyaOnly ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
-            >
-              Tuya
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Products Grid */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {filteredProducts.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">No products found in this category.</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredProducts.map((product: any) => (
-                <div
-                  key={product._id}
-                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer group animate-scale-in"
-                  onClick={() => navigate(`/products/${category}/${product._id}`)}
+          {/* Brand Filters for CCTV */}
+          {category === 'cctv' && (
+            <div className="flex flex-wrap gap-3">
+              <span className="text-gray-700 font-medium text-sm flex items-center">Filter by brand:</span>
+              {[
+                { name: 'Dahua', state: showDahuaOnly, setter: setShowDahuaOnly },
+                { name: 'Hikvision', state: showHikvisionOnly, setter: setShowHikvisionOnly },
+                { name: 'Xiaomi', state: showXiaomiOnly, setter: setShowXiaomiOnly },
+                { name: 'TP-Link', state: showTplinkOnly, setter: setShowTplinkOnly },
+                { name: 'Tuya', state: showTuyaOnly, setter: setShowTuyaOnly }
+              ].map((brand) => (
+                <button
+                  key={brand.name}
+                  onClick={() => brand.setter(!brand.state)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                    brand.state 
+                      ? 'bg-blue-600 text-white shadow-lg' 
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-md'
+                  }`}
                 >
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
-                    {product.stock <= 5 && product.stock > 0 && (
-                      <div className="absolute top-2 left-2 bg-red-600 text-white px-2 py-1 rounded-full text-xs font-semibold">
-                        Low Stock
-                      </div>
-                    )}
-                    {product.stock === 0 && (
-                      <div className="absolute top-2 left-2 bg-gray-600 text-white px-2 py-1 rounded-full text-xs font-semibold">
-                        Out of Stock
-                      </div>
-                    )}
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
-                      {product.name}
-                    </h3>
-                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-                      {product.description}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xl font-bold text-blue-600">
-                        ${product.price}
-                      </span>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleAddToCart(product);
-                        }}
-                        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold"
-                      >
-                        Add to Cart
-                      </button>
-                    </div>
-                  </div>
-                </div>
+                  {brand.name}
+                </button>
               ))}
             </div>
+          )}
+        </div>
+      </div>
+
+      {/* Products Grid */}
+      <section className="pb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {filteredProducts.length === 0 ? (
+            <div className="text-center py-16">
+              <div className="max-w-md mx-auto">
+                <div className="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
+                  <FaSearch className="w-12 h-12 text-gray-400" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">No Products Found</h3>
+                <p className="text-gray-600 mb-6">
+                  No products match your current filters. Try adjusting your search or filters.
+                </p>
+                <button
+                  onClick={() => {
+                    setSearchTerm('');
+                    setShowDahuaOnly(false);
+                    setShowHikvisionOnly(false);
+                    setShowXiaomiOnly(false);
+                    setShowTplinkOnly(false);
+                    setShowTuyaOnly(false);
+                  }}
+                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-colors"
+                >
+                  Clear Filters
+                </button>
+              </div>
+            </div>
+          ) : (
+            <>
+              {/* Results Header */}
+              <div className="mb-8">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-2xl font-bold text-gray-900">
+                    {filteredProducts.length} Product{filteredProducts.length !== 1 ? 's' : ''} Found
+                  </h2>
+                  <div className="text-sm text-gray-500">
+                    Category: {category?.replace('-', ' ')}
+                  </div>
+                </div>
+              </div>
+
+              {/* Products Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                {filteredProducts.map((product: any) => (
+                  <div
+                    key={product._id}
+                    className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-blue-200 transform hover:-translate-y-1 cursor-pointer"
+                    onClick={() => navigate(`/products/${category}/${product._id}`)}
+                  >
+                    {/* Product Image Container */}
+                    <div className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-64 object-contain p-6 group-hover:scale-110 transition-transform duration-500"
+                      />
+                      {/* Stock Badge */}
+                      {product.stock && Number(product.stock) <= 5 && Number(product.stock) > 0 && (
+                        <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg animate-pulse">
+                          Low Stock ({product.stock})
+                        </div>
+                      )}
+                      {product.stock && Number(product.stock) === 0 && (
+                        <div className="absolute top-4 right-4 bg-gray-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
+                          Out of Stock
+                        </div>
+                      )}
+                      {/* Price Badge */}
+                      <div className="absolute top-4 left-4 bg-blue-600 text-white px-4 py-2 rounded-full text-lg font-bold shadow-lg">
+                        ${product.price}
+                      </div>
+                      
+                      {/* Hover Overlay */}
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300"></div>
+                    </div>
+                    
+                    {/* Product Content */}
+                    <div className="p-6">
+                      {/* Product Title */}
+                      <h3 className="text-xl font-bold text-gray-900 mb-4 line-clamp-2 group-hover:text-blue-600 transition-colors leading-tight">
+                        {product.name}
+                      </h3>
+                      
+                      {/* Product Description */}
+                      {product.description && (
+                        <p className="text-gray-600 text-sm mb-6 line-clamp-3 leading-relaxed">
+                          {product.description}
+                        </p>
+                      )}
+                      
+                      {/* Product Details */}
+                      <div className="space-y-3 mb-8">
+                        {product.sku && (
+                          <div className="flex items-center text-sm text-gray-500">
+                            <span className="font-medium mr-2">SKU:</span>
+                            <span className="bg-gray-100 px-2 py-1 rounded text-xs font-mono">
+                              {product.sku}
+                            </span>
+                          </div>
+                        )}
+                        
+                        {/* Stock Status */}
+                        <div className="flex items-center">
+                          <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
+                            product.stock && Number(product.stock) > 0 
+                              ? 'bg-green-100 text-green-800' 
+                              : 'bg-red-100 text-red-800'
+                          }`}>
+                            <span className={`w-2 h-2 rounded-full mr-2 ${
+                              product.stock && Number(product.stock) > 0 ? 'bg-green-500' : 'bg-red-500'
+                            }`}></span>
+                            {product.stock && Number(product.stock) > 0 
+                              ? `In Stock (${product.stock})` 
+                              : 'Out of Stock'
+                            }
+                          </span>
+                        </div>
+                      </div>
+                      
+                      {/* Action Buttons */}
+                      <div className="space-y-3">
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleAddToCart(product);
+                          }}
+                          disabled={!product.stock || Number(product.stock) <= 0}
+                          className="w-full bg-blue-600 text-white py-3 px-6 rounded-xl font-semibold hover:bg-blue-700 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:transform-none"
+                        >
+                          <FaShoppingCart className="text-sm" />
+                          Add to Cart
+                        </button>
+                        
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleWhatsAppOrder(product.name, product.price);
+                          }}
+                          className="w-full bg-green-500 text-white py-3 px-6 rounded-xl font-semibold hover:bg-green-600 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                        >
+                          <FaWhatsapp className="text-sm" />
+                          Buy on WhatsApp
+                        </button>
+                        
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate(`/products/${category}/${product._id}`);
+                          }}
+                          className="w-full bg-gray-100 text-gray-700 py-3 px-6 rounded-xl font-semibold hover:bg-gray-200 transition-all duration-300 flex items-center justify-center gap-2 border border-gray-200 hover:border-gray-300 transform hover:-translate-y-0.5"
+                        >
+                          <FaEye className="text-sm" />
+                          View Details
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
           )}
         </div>
       </section>
