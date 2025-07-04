@@ -4,5 +4,5 @@ export const API_BASE =
   // 2) Local development defaults
   (typeof window !== 'undefined' && window.location.hostname === 'localhost'
     ? 'http://localhost:5000'
-    // 3) Fallback to hosted backend URL (adjust if deployed elsewhere)
-    : 'https://mncc2-backend.onrender.com'); 
+    // 3) Production - use same domain for Vercel deployment
+    : window.location.origin); 

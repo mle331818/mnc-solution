@@ -5,8 +5,13 @@
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist"
+        "distDir": "dist",
+        "buildCommand": "npm run build"
       }
+    },
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
@@ -19,12 +24,16 @@
       "dest": "/api/products.js"
     },
     {
+      "src": "/api/admin/(.*)",
+      "dest": "/api/admin.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }
   ],
   "env": {
-    "MONGODB_URI": "@mongodb_uri"
+    "NODE_ENV": "production"
   },
   "functions": {
     "api/health.js": {
@@ -32,6 +41,10 @@
     },
     "api/products.js": {
       "maxDuration": 30
+    },
+    "api/admin.js": {
+      "maxDuration": 30
     }
-  }
+  },
+  "installCommand": "npm install"
 } 
