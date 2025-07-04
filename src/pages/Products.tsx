@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-<<<<<<< HEAD
 import { useProducts } from '@/contexts/ProductContext';
-=======
 import { FaSearch, FaArrowRight, FaStar, FaTruck, FaShieldAlt } from 'react-icons/fa';
->>>>>>> cef4a0b0cbe62e39a8109eb2edc0ce507e534264
 
 const Products = () => {
   const productCategories = [
@@ -184,57 +181,6 @@ const Products = () => {
       {/* Products Grid */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<<<<<<< HEAD
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {productCategories.map((category, index) => {
-              const stats = categoryStats[category.slug];
-              const hasSales = stats.onSale > 0;
-              
-              return (
-                <Link
-                  key={index}
-                  to={`/products/${category.slug}`}
-                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer group animate-scale-in relative"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  {/* Sale Badge */}
-                  {hasSales && (
-                    <div className="absolute top-2 left-2 z-10">
-                      <div className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold animate-pulse">
-                        SALE!
-                      </div>
-                    </div>
-                  )}
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={category.image}
-                      alt={category.name}
-                      className="w-full h-32 sm:h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
-                    <div className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-blue-600 text-white px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-semibold">
-                      {stats.total} items
-                    </div>
-                  </div>
-                  <div className="p-3 sm:p-6">
-                    <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">
-                      {category.name}
-                    </h3>
-                    <p className="text-xs sm:text-gray-600 sm:text-base mb-3">
-                      {category.description}
-                    </p>
-                    {/* Category Stats */}
-                    <div className="flex flex-wrap gap-2 text-xs">
-                      {hasSales && (
-                        <span className="bg-red-100 text-red-800 px-2 py-1 rounded-full font-medium">
-                          {stats.onSale} on sale
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
-=======
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Browse by Category
@@ -287,7 +233,6 @@ const Products = () => {
                 </div>
               </Link>
             ))}
->>>>>>> cef4a0b0cbe62e39a8109eb2edc0ce507e534264
           </div>
         </div>
       </section>
