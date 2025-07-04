@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import { FaSearch } from 'react-icons/fa';
+import { useProducts } from '@/contexts/ProductContext';
 
 const Products = () => {
   const productCategories = [
@@ -72,6 +72,19 @@ const Products = () => {
 
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
+  const { products } = useProducts();
+
+  // Calculate item counts and sale info for each category (dynamic only)
+  const categoryStats = productCategories.reduce((acc, category) => {
+    const dynamicProducts = products.filter(p => p.category === category.slug);
+    const totalProducts = dynamicProducts.length;
+    const onSaleProducts = dynamicProducts.filter(p => p.salePrice && p.salePrice < p.price).length;
+    acc[category.slug] = {
+      total: totalProducts,
+      onSale: onSaleProducts
+    };
+    return acc;
+  }, {} as Record<string, { total: number; onSale: number }>);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -101,33 +114,54 @@ const Products = () => {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {productCategories.map((category, index) => (
-              <Link
-                key={index}
-                to={`/products/${category.slug}`}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer group animate-scale-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="relative overflow-hidden">
-                  <img
-                    src={category.image}
-                    alt={category.name}
-                    className="w-full h-32 sm:h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                  <div className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-blue-600 text-white px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-semibold">
-                    {category.itemCount}
+            {productCategories.map((category, index) => {
+              const stats = categoryStats[category.slug];
+              const hasSales = stats.onSale > 0;
+              
+              return (
+                <Link
+                  key={index}
+                  to={`/products/${category.slug}`}
+                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer group animate-scale-in relative"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {/* Sale Badge */}
+                  {hasSales && (
+                    <div className="absolute top-2 left-2 z-10">
+                      <div className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold animate-pulse">
+                        SALE!
+                      </div>
+                    </div>
+                  )}
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={category.image}
+                      alt={category.name}
+                      className="w-full h-32 sm:h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                    <div className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-blue-600 text-white px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-semibold">
+                      {stats.total} items
+                    </div>
                   </div>
-                </div>
-                <div className="p-3 sm:p-6">
-                  <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">
-                    {category.name}
-                  </h3>
-                  <p className="text-xs sm:text-gray-600 sm:text-base">
-                    {category.description}
-                  </p>
-                </div>
-              </Link>
-            ))}
+                  <div className="p-3 sm:p-6">
+                    <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">
+                      {category.name}
+                    </h3>
+                    <p className="text-xs sm:text-gray-600 sm:text-base mb-3">
+                      {category.description}
+                    </p>
+                    {/* Category Stats */}
+                    <div className="flex flex-wrap gap-2 text-xs">
+                      {hasSales && (
+                        <span className="bg-red-100 text-red-800 px-2 py-1 rounded-full font-medium">
+                          {stats.onSale} on sale
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>

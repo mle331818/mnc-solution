@@ -1,47 +1,107 @@
-import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { productData } from './ProductDetail';
-
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
+import { useProducts } from '@/contexts/ProductContext';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useState, useEffect } from 'react';
 
 const SearchResults = () => {
-  const query = useQuery();
-  const searchTerm = query.get('query') || '';
+  const location = useLocation();
   const navigate = useNavigate();
+  const { products } = useProducts();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<any[]>([]);
 
-  // Gather all products from all categories
-  const allProducts = Object.entries(productData).flatMap(([category, data]) =>
-    (data.products || []).map((p: any) => ({ ...p, category }))
-  );
+  // Get search query from URL
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const query = params.get('q') || params.get('query') || '';
+    setSearchQuery(query);
+    performSearch(query);
+  }, [location.search, products]);
 
-  // Multi-word search logic
-  const terms = searchTerm.trim().toLowerCase().split(/\s+/);
-  const filtered = searchTerm.trim() === '' ? [] : allProducts.filter((p: any) => {
-    const text = `${p.name} ${p.sku} ${p.description}`.toLowerCase();
-    return terms.every(term => text.includes(term));
-  });
+  const performSearch = (query: string) => {
+    if (!query.trim()) {
+      setSearchResults([]);
+      return;
+    }
+
+    // Multi-word search: all words must be present in any field
+    const words = query.toLowerCase().split(/\s+/).filter(Boolean);
+    const results = products.filter(product => {
+      const haystack = [product.name, product.description, product.category].join(' ').toLowerCase();
+      return words.every(word => haystack.includes(word));
+    });
+
+    setSearchResults(results);
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-5xl mx-auto py-12 px-4">
-        <h1 className="text-2xl font-bold mb-6">Search Results for "{searchTerm}"</h1>
-        {filtered.length === 0 ? (
-          <div className="text-gray-600">No products found.</div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {filtered.map((product: any) => (
-              <div key={product.category + '-' + product.id} className="bg-white rounded-lg shadow p-4 flex flex-col items-center cursor-pointer hover:shadow-lg transition" onClick={() => navigate(`/products/${product.category}/${product.id}`)}>
-                <img src={product.image} alt={product.name} className="h-32 w-full object-contain mb-3" />
-                <div className="font-semibold text-base mb-1 text-center">{product.name}</div>
-                <div className="text-blue-600 font-bold text-lg mb-2">{product.salePrice ? <><span className='line-through text-gray-400 mr-1'>${product.price}</span> <span>${product.salePrice}</span></> : <>${product.price}</>}</div>
-                <div className="text-xs text-gray-500 text-center">{product.sku}</div>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8">Search Results</h1>
+
+      {/* Search Form */}
+      <form onSubmit={handleSearch} className="mb-8">
+        <div className="flex gap-2 max-w-md">
+          <Input
+            type="text"
+            placeholder="Search products..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="flex-1"
+          />
+          <Button type="submit">Search</Button>
+        </div>
+      </form>
+
+      {/* Results Count */}
+      <p className="text-gray-600 mb-6">
+        Found {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} for "{searchQuery}"
+      </p>
+
+      {/* Results Grid */}
+      {searchResults.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {searchResults.map((product) => (
+            <div
+              key={product.id}
+              className="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+              onClick={() => navigate(`/products/${product.category.toLowerCase()}/${product.id}`)}
+            >
+              {product.image ? (
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-48 object-cover"
+                />
+              ) : (
+                <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
+                  No image available
+                </div>
+              )}
+              <div className="p-4">
+                <h3 className="font-semibold mb-2">{product.name}</h3>
+                <p className="text-sm text-gray-600 mb-2">{product.category}</p>
+                <p className="text-blue-600 font-semibold">${product.price}</p>
               </div>
-            ))}
-          </div>
-        )}
-      </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-8">
+          <p className="text-gray-600">No products found matching your search.</p>
+          <Button
+            onClick={() => navigate('/products')}
+            className="mt-4"
+          >
+            Browse All Products
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
