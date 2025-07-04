@@ -34,17 +34,5 @@
   ],
   "env": {
     "NODE_ENV": "production"
-  },
-  "functions": {
-    "api/health.js": {
-      "maxDuration": 30
-    },
-    "api/products.js": {
-      "maxDuration": 30
-    },
-    "api/admin.js": {
-      "maxDuration": 30
-    }
-  },
-  "installCommand": "npm install"
+  }
 } 
