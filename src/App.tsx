@@ -15,22 +15,12 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Cart from "./pages/Cart";
 import SearchResults from './pages/SearchResults';
-<<<<<<< HEAD
 import AdminDashboard from "./pages/Admin";
-=======
-import CategoryProducts from "./pages/CategoryProducts";
-
-// Admin components
-import AdminLogin from "./pages/admin/Login";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import RequireAuth from "./pages/admin/RequireAuth";
->>>>>>> cef4a0b0cbe62e39a8109eb2edc0ce507e534264
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-<<<<<<< HEAD
     <ProductProvider>
       <CartProvider>
         <TooltipProvider>
@@ -56,37 +46,6 @@ const App = () => (
         </TooltipProvider>
       </CartProvider>
     </ProductProvider>
-=======
-    <CartProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/products/:category" element={<CategoryProducts />} />
-            <Route path="/products/:category/:productId" element={<ProductDetail />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/services/:service" element={<ServiceDetail />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/search" element={<SearchResults />} />
-            
-            {/* Admin Routes */}
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin" element={<RequireAuth />}>
-              <Route index element={<AdminDashboard />} />
-            </Route>
-            
-            {/* Catch-all route */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </CartProvider>
->>>>>>> cef4a0b0cbe62e39a8109eb2edc0ce507e534264
   </QueryClientProvider>
 );
 
