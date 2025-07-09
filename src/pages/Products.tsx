@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import { useProducts } from '@/contexts/ProductContext';
-import { FaSearch, FaArrowRight, FaStar, FaTruck, FaShieldAlt } from 'react-icons/fa';
+import { useProducts } from '../hooks/useProducts';
+import { FaSearch, FaArrowRight, FaStar, FaTruck, FaShieldAlt, FaTag } from 'react-icons/fa';
 
 const Products = () => {
   const productCategories = [
@@ -82,13 +82,16 @@ const Products = () => {
 
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
-  const { products } = useProducts();
+  const { getAllProducts } = useProducts();
 
-  // Calculate item counts and sale info for each category (dynamic only)
+  // Get all products and calculate category stats
+  const allProducts = getAllProducts();
+  
+  // Calculate item counts and sale info for each category
   const categoryStats = productCategories.reduce((acc, category) => {
-    const dynamicProducts = products.filter(p => p.category === category.slug);
-    const totalProducts = dynamicProducts.length;
-    const onSaleProducts = dynamicProducts.filter(p => p.salePrice && p.salePrice < p.price).length;
+    const categoryProducts = allProducts.filter(p => p.category === category.slug);
+    const totalProducts = categoryProducts.length;
+    const onSaleProducts = categoryProducts.filter(p => p.salePrice && p.salePrice < p.price).length;
     acc[category.slug] = {
       total: totalProducts,
       onSale: onSaleProducts
@@ -191,48 +194,84 @@ const Products = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {productCategories.map((category, index) => (
-              <Link
-                key={index}
-                to={`/products/${category.slug}`}
-                className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-105 cursor-pointer transform hover:-translate-y-2 border border-gray-100"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="relative overflow-hidden">
-                  <img
-                    src={category.image}
-                    alt={category.name}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                    onError={(e) => {
-                      e.currentTarget.src = '/images/placeholder.svg';
-                    }}
-                  />
-                  <div className={`absolute top-4 right-4 bg-gradient-to-r ${getCategoryGradient(category.color)} text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg`}>
-                    {category.itemCount}
+            {productCategories.map((category, index) => {
+              const stats = categoryStats[category.slug];
+              const totalItems = stats?.total || 0;
+              const onSaleItems = stats?.onSale || 0;
+              
+              return (
+                <Link
+                  key={index}
+                  to={`/products/${category.slug}`}
+                  className="group bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-105 cursor-pointer transform hover:-translate-y-2 border border-gray-100 relative"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {/* Modern Gradient Overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${getCategoryGradient(category.color)} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
+                  
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={category.image}
+                      alt={category.name}
+                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                      onError={(e) => {
+                        e.currentTarget.src = '/images/placeholder.svg';
+                      }}
+                    />
+                    
+                    {/* Dynamic Count Badge */}
+                    <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm text-gray-900 px-3 py-1.5 rounded-full text-sm font-bold shadow-lg border border-gray-200">
+                      {totalItems} {totalItems === 1 ? 'item' : 'items'}
+                    </div>
+                    
+                    {/* Sale Badge */}
+                    {onSaleItems > 0 && (
+                      <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1.5 rounded-full text-sm font-bold shadow-lg animate-pulse">
+                        <FaTag className="inline w-3 h-3 mr-1" />
+                        {onSaleItems} on sale
+                      </div>
+                    )}
+                    
+                    {/* Hover Overlay */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
                   </div>
                   
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
-                </div>
-                
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
-                      {category.name}
-                    </h3>
-                    <FaArrowRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-300" />
+                  <div className="p-6 relative z-10">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                        {category.name}
+                      </h3>
+                      <div className="flex items-center space-x-2">
+                        <FaArrowRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-300" />
+                      </div>
+                    </div>
+                    <p className="text-gray-600 leading-relaxed mb-4">
+                      {category.description}
+                    </p>
+                    
+                    {/* Modern Stats Row */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-${category.color}-100 text-${category.color}-800 shadow-sm`}>
+                          {totalItems} Available
+                        </div>
+                        {onSaleItems > 0 && (
+                          <div className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 shadow-sm">
+                            <FaTag className="w-2 h-2 mr-1" />
+                            {onSaleItems} Sale
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Explore Button */}
+                      <div className={`px-3 py-1.5 rounded-full text-xs font-medium bg-gradient-to-r ${getCategoryGradient(category.color)} text-white shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300`}>
+                        Explore
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-gray-600 leading-relaxed mb-4">
-                    {category.description}
-                  </p>
-                  
-                  {/* Category Badge */}
-                  <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-${category.color}-100 text-${category.color}-800`}>
-                    {category.itemCount} Available
-                  </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
