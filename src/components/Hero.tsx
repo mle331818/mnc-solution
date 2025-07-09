@@ -38,8 +38,8 @@ const Hero = () => {
             <div className="relative rounded-lg overflow-hidden shadow-2xl">
               <div className="aspect-w-16 aspect-h-9">
                 <img
-                  src="/images/hero.jpg"
-                  alt="Professional workspace"
+                  src="/images/hero-modern.jpg"
+                  alt="Modern tech workspace with professional equipment"
                   className="w-full h-full object-cover"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
