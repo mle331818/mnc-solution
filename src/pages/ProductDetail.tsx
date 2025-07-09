@@ -354,19 +354,36 @@ const ProductDetail = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            {currentCategory?.title || 'Products'}
-          </h1>
-          <p className="text-xl mb-8">
-            {currentCategory?.description || 'Browse our products'}
-          </p>
+      <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-8 md:py-12 relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }}></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex flex-col md:flex-row items-center justify-between">
+            <div className="flex-1 text-center md:text-left">
+              <h1 className="text-3xl md:text-4xl font-bold mb-2">
+                {currentCategory?.title || 'Products'}
+              </h1>
+              <p className="text-lg md:text-xl opacity-90">
+                {currentCategory?.description || 'Browse our products'}
+              </p>
+            </div>
+            <div className="mt-4 md:mt-0">
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-6 py-3 border border-white/20">
+                <span className="text-2xl font-bold">{products.length}</span>
+                <span className="text-sm opacity-80 ml-2">products</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Main Content with Sidebar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Mobile Category Selector */}
         <div className="lg:hidden mb-6">
           <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-4">
@@ -455,8 +472,8 @@ const ProductDetail = () => {
           {/* Main Content */}
           <div className="flex-1">
             {/* Filters and Search */}
-            <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-              <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div className="bg-white rounded-xl shadow-md p-4 mb-6">
+              <div className="flex flex-col md:flex-row gap-3 items-center justify-between">
                 {/* Search */}
                 <div className="relative flex-1 max-w-md">
                   <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -465,7 +482,7 @@ const ProductDetail = () => {
                     placeholder="Search products..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
                   />
                 </div>
                 
@@ -473,40 +490,40 @@ const ProductDetail = () => {
                 <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => setShowDahuaOnly(!showDahuaOnly)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      showDahuaOnly ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
+                      showDahuaOnly ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
                     Dahua
                   </button>
                   <button
                     onClick={() => setShowHikvisionOnly(!showHikvisionOnly)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      showHikvisionOnly ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
+                      showHikvisionOnly ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
                     Hikvision
                   </button>
                   <button
                     onClick={() => setShowXiaomiOnly(!showXiaomiOnly)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      showXiaomiOnly ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
+                      showXiaomiOnly ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
                     Xiaomi
                   </button>
                   <button
                     onClick={() => setShowTplinkOnly(!showTplinkOnly)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      showTplinkOnly ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
+                      showTplinkOnly ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
                     TP-Link
                   </button>
                   <button
                     onClick={() => setShowTuyaOnly(!showTuyaOnly)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      showTuyaOnly ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 ${
+                      showTuyaOnly ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                   >
                     Tuya
@@ -523,46 +540,46 @@ const ProductDetail = () => {
                   <p className="text-gray-500">Try adjusting your search or filters</p>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                   {filteredProducts.map((product: any) => (
                     <div
                       key={product.id}
-                      className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer"
+                      className="group bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 border border-gray-100"
                       onClick={() => navigate(`/products/${category}/${product.id}`)}
                     >
                       <div className="relative">
                         <img
                           src={product.image}
                           alt={product.name}
-                          className="w-full h-48 object-contain p-4"
+                          className="w-full h-40 object-contain p-3 group-hover:scale-105 transition-transform duration-300"
                         />
                         {product.salePrice && (
-                          <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-semibold">
+                          <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold shadow-lg animate-pulse">
                             SALE
                           </div>
                         )}
                         {product.stock === 0 && (
-                          <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-semibold">
+                          <div className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 rounded-full text-xs font-bold shadow-lg">
                             Out of Stock
                           </div>
                         )}
                       </div>
                       
                       <div className="p-4">
-                        <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2">
+                        <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 text-sm">
                           {product.name}
                         </h3>
                         
                         <div className="mb-2">
                           {product.salePrice ? (
-                            <div className="flex items-center">
+                            <div className="flex items-center flex-wrap gap-1">
                               <span className="text-lg font-bold text-red-600">
                                 ${product.salePrice}
                               </span>
-                              <span className="text-sm text-gray-500 line-through ml-2">
+                              <span className="text-sm text-gray-500 line-through">
                                 ${product.price}
                               </span>
-                              <span className="ml-2 bg-red-100 text-red-700 px-2 py-0.5 rounded text-xs font-semibold">
+                              <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded-full text-xs font-semibold">
                                 Save {Math.round(100 - (Number(product.salePrice) / Number(product.price)) * 100)}%
                               </span>
                             </div>
@@ -577,7 +594,7 @@ const ProductDetail = () => {
                           <p className="text-xs text-gray-500 mb-2">SKU: {product.sku}</p>
                         )}
                         
-                        <p className="text-sm text-gray-600 line-clamp-2 mb-4">
+                        <p className="text-xs text-gray-600 line-clamp-2 mb-3">
                           {product.description}
                         </p>
                         
@@ -587,7 +604,7 @@ const ProductDetail = () => {
                               e.stopPropagation();
                               handleAddToCart(product);
                             }}
-                            className="flex-1 bg-blue-600 text-white px-3 py-2 rounded text-sm font-medium hover:bg-blue-700 transition-colors"
+                            className="flex-1 bg-blue-600 text-white px-2 py-1.5 rounded-lg text-xs font-medium hover:bg-blue-700 transition-colors"
                           >
                             Add to Cart
                           </button>
@@ -597,7 +614,7 @@ const ProductDetail = () => {
                               e.stopPropagation();
                               handleWhatsAppOrder(product.name, `$${product.salePrice || product.price}`);
                             }}
-                            className="flex-1 bg-green-600 text-white px-3 py-2 rounded text-sm font-medium hover:bg-green-700 transition-colors flex items-center justify-center"
+                            className="flex-1 bg-green-600 text-white px-2 py-1.5 rounded-lg text-xs font-medium hover:bg-green-700 transition-colors flex items-center justify-center"
                           >
                             <FaWhatsapp className="text-xs mr-1" />
                             Buy WhatsApp
