@@ -367,26 +367,107 @@ const ProductDetail = () => {
 
       {/* Main Content with Sidebar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Mobile Category Selector */}
+        <div className="lg:hidden mb-6">
+          <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-4">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-gray-900">Categories</h3>
+              <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                <svg className="w-3 h-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {getAllCategories().map((cat) => (
+                <button
+                  key={cat.slug}
+                  onClick={() => navigate(`/products/${cat.slug}`)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    category === cat.slug
+                      ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md shadow-blue-500/25'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-sm'
+                  }`}
+                >
+                  {cat.title}
+                  <span className="ml-2 text-xs opacity-75">({cat.products.length})</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+        
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar - Categories */}
-          <div className="lg:w-64 flex-shrink-0">
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Categories</h3>
-              <div className="space-y-2">
+          <div className="lg:w-72 flex-shrink-0">
+            <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-xl border border-gray-100 p-6 sticky top-6">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-bold text-gray-900">Categories</h3>
+                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                  <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  </svg>
+                </div>
+              </div>
+              <div className="space-y-3">
                 {getAllCategories().map((cat) => (
                   <button
                     key={cat.slug}
                     onClick={() => navigate(`/products/${cat.slug}`)}
-                    className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
+                    className={`w-full group relative overflow-hidden rounded-xl transition-all duration-300 transform hover:scale-105 ${
                       category === cat.slug
-                        ? 'bg-blue-600 text-white font-semibold'
-                        : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
+                        ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-500/25'
+                        : 'bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 hover:border-blue-300 hover:shadow-md'
                     }`}
                   >
-                    <div className="font-medium">{cat.title}</div>
-                    <div className="text-sm opacity-75">{cat.products.length} products</div>
+                    <div className="p-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <div className={`font-semibold text-left ${
+                            category === cat.slug ? 'text-white' : 'text-gray-900'
+                          }`}>
+                            {cat.title}
+                          </div>
+                          <div className={`text-sm mt-1 ${
+                            category === cat.slug ? 'text-blue-100' : 'text-gray-500'
+                          }`}>
+                            {cat.products.length} products
+                          </div>
+                        </div>
+                        <div className={`flex items-center ${
+                          category === cat.slug ? 'text-white' : 'text-gray-400 group-hover:text-blue-600'
+                        }`}>
+                          <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                    {category === cat.slug && (
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-blue-700/10 rounded-xl"></div>
+                    )}
                   </button>
                 ))}
+              </div>
+              
+              {/* Mobile-friendly category chips for small screens */}
+              <div className="lg:hidden mt-6 pt-6 border-t border-gray-200">
+                <h4 className="text-sm font-semibold text-gray-600 mb-3">Quick Categories</h4>
+                <div className="flex flex-wrap gap-2">
+                  {getAllCategories().slice(0, 4).map((cat) => (
+                    <button
+                      key={cat.slug}
+                      onClick={() => navigate(`/products/${cat.slug}`)}
+                      className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                        category === cat.slug
+                          ? 'bg-blue-600 text-white shadow-md'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
+                    >
+                      {cat.title}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
