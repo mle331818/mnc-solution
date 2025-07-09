@@ -399,7 +399,7 @@ const ProductDetail = () => {
         
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar - Categories */}
-          <div className="lg:w-72 flex-shrink-0">
+          <div className="hidden lg:block lg:w-72 flex-shrink-0">
             <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-xl border border-gray-100 p-6 sticky top-6">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-bold text-gray-900">Categories</h3>
@@ -448,26 +448,6 @@ const ProductDetail = () => {
                     )}
                   </button>
                 ))}
-              </div>
-              
-              {/* Mobile-friendly category chips for small screens */}
-              <div className="lg:hidden mt-6 pt-6 border-t border-gray-200">
-                <h4 className="text-sm font-semibold text-gray-600 mb-3">Quick Categories</h4>
-                <div className="flex flex-wrap gap-2">
-                  {getAllCategories().slice(0, 4).map((cat) => (
-                    <button
-                      key={cat.slug}
-                      onClick={() => navigate(`/products/${cat.slug}`)}
-                      className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                        category === cat.slug
-                          ? 'bg-blue-600 text-white shadow-md'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      }`}
-                    >
-                      {cat.title}
-                    </button>
-                  ))}
-                </div>
               </div>
             </div>
           </div>
