@@ -20,9 +20,24 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Handle form submission here
-    alert('Thank you for your message! We will get back to you soon.');
+    
+    // Create WhatsApp message with all form data
+    const phoneNumber = '76331818'; // Your WhatsApp number
+    const message = `*New Contact Form Submission*
+
+*Name:* ${formData.name}
+*Email:* ${formData.email}
+*Phone:* ${formData.phone}
+*Subject:* ${formData.subject}
+*Message:* ${formData.message}
+
+*Submitted via MNC Solution Website*`;
+    
+    // Open WhatsApp with the formatted message
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+    
+    // Reset form
     setFormData({
       name: '',
       email: '',
@@ -33,7 +48,7 @@ const Contact = () => {
   };
 
   const handleWhatsAppClick = () => {
-    const phoneNumber = '96176331818'; // Remove spaces and + for WhatsApp URL
+    const phoneNumber = '76331818'; // Your WhatsApp number
     const message = encodeURIComponent('Hello, I would like to get in touch with MNC Solution.');
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
@@ -84,7 +99,7 @@ const Contact = () => {
             
             {/* Contact Form */}
             <div className="bg-white rounded-xl shadow-lg p-8 animate-fade-in">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message via WhatsApp</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -174,9 +189,10 @@ const Contact = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-purple-700 transition-colors duration-200 hover:scale-105"
+                  className="w-full bg-green-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors duration-200 hover:scale-105 flex items-center justify-center space-x-2"
                 >
-                  Send Message
+                  <span>📱</span>
+                  <span>Send via WhatsApp</span>
                 </button>
               </form>
             </div>
