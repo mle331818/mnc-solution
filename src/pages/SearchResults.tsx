@@ -1,29 +1,22 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-<<<<<<< HEAD
 import { useProducts } from '../hooks/useProducts';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useState, useEffect } from 'react';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
-=======
-import { useProducts } from '@/contexts/ProductContext';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useState, useEffect } from 'react';
->>>>>>> f62b2f5b80d8d03bbcfffff3d7ab79b459bf47ae
 
 const SearchResults = () => {
   const location = useLocation();
   const navigate = useNavigate();
-<<<<<<< HEAD
   const { getAllProducts } = useProducts();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<any[]>([]);
 
   // Gather all products from all categories
   const allProducts = getAllProducts();
-=======
-  const { products } = useProducts();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<any[]>([]);
 
   // Get search query from URL
   useEffect(() => {
@@ -31,8 +24,7 @@ const SearchResults = () => {
     const query = params.get('q') || params.get('query') || '';
     setSearchQuery(query);
     performSearch(query);
-  }, [location.search, products]);
->>>>>>> f62b2f5b80d8d03bbcfffff3d7ab79b459bf47ae
+  }, [location.search, allProducts]);
 
   const performSearch = (query: string) => {
     if (!query.trim()) {
@@ -42,7 +34,7 @@ const SearchResults = () => {
 
     // Multi-word search: all words must be present in any field
     const words = query.toLowerCase().split(/\s+/).filter(Boolean);
-    const results = products.filter(product => {
+    const results = allProducts.filter(product => {
       const haystack = [product.name, product.description, product.category].join(' ').toLowerCase();
       return words.every(word => haystack.includes(word));
     });
