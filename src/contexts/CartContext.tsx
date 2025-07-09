@@ -1,16 +1,9 @@
 import React, { createContext, useContext, useReducer, ReactNode, useEffect } from 'react';
-
-interface Product {
-  id: string;
-  name: string;
-  price: string | number;
-  description: string;
-  image: string;
-  category: string;
-}
+import { Product } from '../components/ProductForm';
 
 interface CartItem extends Product {
   quantity: number;
+  _id: string;
 }
 
 interface CartState {
@@ -32,13 +25,13 @@ const CartContext = createContext<{
 const cartReducer = (state: CartState, action: CartAction): CartState => {
   switch (action.type) {
     case 'ADD_TO_CART': {
-      const existingItem = state.items.find(item => item.id === action.payload.id);
+      const existingItem = state.items.find(item => item._id === action.payload._id);
       
       if (existingItem) {
         return {
           ...state,
           items: state.items.map(item =>
-            item.id === action.payload.id
+            item._id === action.payload._id
               ? { ...item, quantity: item.quantity + 1 }
               : item
           ),
@@ -54,22 +47,22 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
     }
     
     case 'REMOVE_FROM_CART': {
-      const item = state.items.find(item => item.id === action.payload);
+      const item = state.items.find(item => item._id === action.payload);
       return {
         ...state,
-        items: state.items.filter(item => item.id !== action.payload),
+        items: state.items.filter(item => item._id !== action.payload),
         totalItems: state.totalItems - (item?.quantity || 0)
       };
     }
     
     case 'UPDATE_QUANTITY': {
-      const item = state.items.find(item => item.id === action.payload.id);
+      const item = state.items.find(item => item._id === action.payload._id);
       const quantityDiff = action.payload.quantity - (item?.quantity || 0);
       
       if (action.payload.quantity <= 0) {
         return {
           ...state,
-          items: state.items.filter(item => item.id !== action.payload.id),
+          items: state.items.filter(item => item._id !== action.payload._id),
           totalItems: state.totalItems - (item?.quantity || 0)
         };
       }
@@ -77,7 +70,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       return {
         ...state,
         items: state.items.map(item =>
-          item.id === action.payload.id
+          item._id === action.payload._id
             ? { ...item, quantity: action.payload.quantity }
             : item
         ),

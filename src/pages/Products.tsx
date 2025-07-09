@@ -1,77 +1,100 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import { FaSearch } from 'react-icons/fa';
+import { useProducts } from '@/contexts/ProductContext';
+import { FaSearch, FaArrowRight, FaStar, FaTruck, FaShieldAlt } from 'react-icons/fa';
 
 const Products = () => {
   const productCategories = [
     {
       name: 'CCTV',
       description: 'Security cameras and surveillance systems',
-      image: 'https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&w=600&q=80',
+      image: '/images/dahua.png',
       itemCount: '20+ systems',
-      slug: 'cctv'
+      slug: 'cctv',
+      color: 'blue'
     },
     {
       name: 'Network Solution',
-      description: 'Latest electronic devices and gadgets',
-      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80',
+      description: 'Latest networking devices and solutions',
+      image: '/images/tplink.png',
       itemCount: '50+ items',
-      slug: 'network-solution'
+      slug: 'network-solution',
+      color: 'purple'
     },
     {
       name: 'Softwares',
       description: 'Custom software and applications',
-      image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=600&q=80',
+      image: '/images/categories/software.jpg',
       itemCount: '25+ solutions',
-      slug: 'softwares'
+      slug: 'softwares',
+      color: 'green'
     },
     {
       name: 'Computer and Laptops',
-      description: 'Quality hardware parts and components',
-      image: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=600&q=80',
+      description: 'Quality hardware and computing solutions',
+      image: '/images/categories/computer.jpg',
       itemCount: '100+ components',
-      slug: 'computer-laptops'
+      slug: 'computer-laptops',
+      color: 'orange'
     },
     {
       name: 'Satellite',
-      description: 'Professional business and productivity tools',
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80',
+      description: 'Professional satellite and communication tools',
+      image: '/images/categories/satellite.jpg',
       itemCount: '30+ tools',
-      slug: 'satellite'
+      slug: 'satellite',
+      color: 'indigo'
     },
     {
       name: 'Fiber Solution',
       description: 'Digital products and online services',
-      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80',
+      image: '/images/categories/fiber.jpg',
       itemCount: '40+ services',
-      slug: 'fiber-solution'
+      slug: 'fiber-solution',
+      color: 'teal'
     },
     {
       name: 'Interphone Solution',
       description: 'Expert consultation and advisory services',
-      image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80',
+      image: '/images/categories/interphone.jpg',
       itemCount: '15+ packages',
-      slug: 'interphone-solution'
+      slug: 'interphone-solution',
+      color: 'pink'
     },
     {
       name: '3D Printers & CNC',
       description: '3D printing and CNC machining solutions',
-      image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=600&q=80',
+      image: '/images/3d-printer.jpg',
       itemCount: '10+ machines',
-      slug: '3d-printers-cnc'
+      slug: '3d-printers-cnc',
+      color: 'gray'
     },
     {
       name: 'Automation System',
       description: 'Smart automation and control systems',
-      image: 'https://images.unsplash.com/photo-1487887235947-a955ef187fcc?auto=format&fit=crop&w=600&q=80',
+      image: '/images/categories/automation.jpg',
       itemCount: '15+ systems',
-      slug: 'automation-system'
+      slug: 'automation-system',
+      color: 'emerald'
     }
   ];
 
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
+  const { products } = useProducts();
+
+  // Calculate item counts and sale info for each category (dynamic only)
+  const categoryStats = productCategories.reduce((acc, category) => {
+    const dynamicProducts = products.filter(p => p.category === category.slug);
+    const totalProducts = dynamicProducts.length;
+    const onSaleProducts = dynamicProducts.filter(p => p.salePrice && p.salePrice < p.price).length;
+    acc[category.slug] = {
+      total: totalProducts,
+      onSale: onSaleProducts
+    };
+    return acc;
+  }, {} as Record<string, { total: number; onSale: number }>);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -81,50 +104,132 @@ const Products = () => {
     }
   };
 
+  const getCategoryGradient = (color: string) => {
+    const gradients = {
+      blue: 'from-blue-500 to-blue-600',
+      purple: 'from-purple-500 to-purple-600',
+      green: 'from-green-500 to-green-600',
+      orange: 'from-orange-500 to-orange-600',
+      indigo: 'from-indigo-500 to-indigo-600',
+      teal: 'from-teal-500 to-teal-600',
+      pink: 'from-pink-500 to-pink-600',
+      gray: 'from-gray-500 to-gray-600',
+      emerald: 'from-emerald-500 to-emerald-600'
+    };
+    return gradients[color as keyof typeof gradients] || gradients.blue;
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 animate-fade-in">
+      <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-20 relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }}></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">
             Our Products
           </h1>
-          <p className="text-xl mb-8 animate-fade-in">
-            Discover our comprehensive range of high-quality products
+          <p className="text-xl md:text-2xl mb-8 animate-fade-in text-white/90 max-w-3xl mx-auto leading-relaxed">
+            Discover our comprehensive range of high-quality products designed to meet your needs
           </p>
+          
+          {/* Search Box */}
+          <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-8">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-6 py-4 pl-14 pr-20 text-gray-900 bg-white rounded-2xl shadow-lg focus:ring-4 focus:ring-blue-300 focus:outline-none text-lg"
+              />
+              <FaSearch className="absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl" />
+              <button
+                type="submit"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white px-6 py-2 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
+              >
+                Search
+              </button>
+            </div>
+          </form>
+          
+          {/* Stats */}
+          <div className="flex flex-wrap justify-center gap-8 mt-12">
+            <div className="flex items-center text-white/80">
+              <FaStar className="w-6 h-6 mr-3 text-yellow-300" />
+              <span className="text-lg font-semibold">Premium Quality</span>
+            </div>
+            <div className="flex items-center text-white/80">
+              <FaTruck className="w-6 h-6 mr-3 text-blue-200" />
+              <span className="text-lg font-semibold">Fast Delivery</span>
+            </div>
+            <div className="flex items-center text-white/80">
+              <FaShieldAlt className="w-6 h-6 mr-3 text-green-200" />
+              <span className="text-lg font-semibold">Warranty</span>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Products Grid */}
-      <section className="py-16">
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Browse by Category
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Explore our wide range of products organized by category for easy navigation
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {productCategories.map((category, index) => (
               <Link
                 key={index}
                 to={`/products/${category.slug}`}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer group animate-scale-in"
+                className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-105 cursor-pointer transform hover:-translate-y-2 border border-gray-100"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="relative overflow-hidden">
                   <img
                     src={category.image}
                     alt={category.name}
-                    className="w-full h-32 sm:h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                    onError={(e) => {
+                      e.currentTarget.src = '/images/placeholder.svg';
+                    }}
                   />
-                  <div className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-blue-600 text-white px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-semibold">
+                  <div className={`absolute top-4 right-4 bg-gradient-to-r ${getCategoryGradient(category.color)} text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg`}>
                     {category.itemCount}
                   </div>
+                  
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
                 </div>
-                <div className="p-3 sm:p-6">
-                  <h3 className="text-base sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">
-                    {category.name}
-                  </h3>
-                  <p className="text-xs sm:text-gray-600 sm:text-base">
+                
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                      {category.name}
+                    </h3>
+                    <FaArrowRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-300" />
+                  </div>
+                  <p className="text-gray-600 leading-relaxed mb-4">
                     {category.description}
                   </p>
+                  
+                  {/* Category Badge */}
+                  <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-${category.color}-100 text-${category.color}-800`}>
+                    {category.itemCount} Available
+                  </div>
                 </div>
               </Link>
             ))}
