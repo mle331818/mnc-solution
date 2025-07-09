@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { productData } from './ProductDetail';
+import { useProducts } from '../hooks/useProducts';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -10,11 +10,10 @@ const SearchResults = () => {
   const query = useQuery();
   const searchTerm = query.get('query') || '';
   const navigate = useNavigate();
+  const { getAllProducts } = useProducts();
 
   // Gather all products from all categories
-  const allProducts = Object.entries(productData).flatMap(([category, data]) =>
-    (data.products || []).map((p: any) => ({ ...p, category }))
-  );
+  const allProducts = getAllProducts();
 
   // Multi-word search logic
   const terms = searchTerm.trim().toLowerCase().split(/\s+/);

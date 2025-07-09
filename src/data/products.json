@@ -1,0 +1,386 @@
+{
+  "categories": {
+    "cctv": {
+      "title": "CCTV Systems",
+      "description": "Professional security cameras and surveillance systems",
+      "products": [
+        {
+          "id": "dahua-ups-800va",
+          "name": "Dahua Line Interactive UPS 800VA | 480Watt | DH-PFM350-480-A",
+          "brand": "Dahua",
+          "price": 40.00,
+          "salePrice": 36.00,
+          "image": "/images/products/dahualineups.png",
+          "description": "Line Interactive UPS 800VA, 480Watt, model DH-PFM350-480-A. Reliable backup for your CCTV system.",
+          "sku": "DH-PFM350-480-A",
+          "barcode": "",
+          "stock": 5,
+          "category": "cctv"
+        },
+        {
+          "id": "dahua-monitor-27",
+          "name": "Dahua 27-inch FHD 100HZ LED Business Monitor DHI-LM27-B201S",
+          "price": 110.00,
+          "salePrice": 89.00,
+          "image": "/images/products/dahua-monitor-27.png",
+          "description": "27-inch FHD 100Hz LED monitor, model DHI-LM27-B201S. Perfect for surveillance setups.",
+          "sku": "DHI-LM27-B201S",
+          "barcode": "",
+          "stock": 2,
+          "category": "cctv"
+        },
+        {
+          "id": "dahua-nvr-1108hs",
+          "name": "Dahua NVR DHI-NVR1108HS-8P-S3/H",
+          "price": 99.00,
+          "image": "/images/products/DahuaNVRDHI.png",
+          "description": "Network Video Recorder, 8 channels, model DHI-NVR1108HS-8P-S3/H.",
+          "sku": "DHI-NVR1108HS-8P-S3/H",
+          "barcode": "",
+          "stock": 3,
+          "category": "cctv"
+        },
+        {
+          "id": "dahua-ups-1200va",
+          "name": "Dahua Line Interactive UPS 1200VA | 720Watt | DH-PFM350-720-A | X2 Batteries 12V 7Amp",
+          "price": 70.00,
+          "image": "/images/products/dahualineups.png",
+          "description": "Line Interactive UPS 1200VA, 720Watt, model DH-PFM350-720-A, with 2x 12V 7Amp batteries.",
+          "sku": "DH-PFM350-720-A",
+          "barcode": "",
+          "stock": 4,
+          "category": "cctv"
+        },
+        {
+          "id": "dahua-xvr1b04h-i",
+          "name": "Dahua Hybrid Video Recorder DH-XVR1B04H-I 4-Channel",
+          "price": 39.00,
+          "image": "/images/products/dahuahybrid.png",
+          "description": "Hybrid Video Recorder, 4 channels, model DH-XVR1B04H-I.",
+          "sku": "DH-XVR1B04H-I",
+          "barcode": "",
+          "stock": 6,
+          "category": "cctv"
+        },
+        {
+          "id": "dahua-hero-h2a",
+          "name": "Dahua Hero H2A 2MP Indoor Wi-Fi Pan & Tilt Network Camera",
+          "price": 35.00,
+          "image": "/images/products/dahuaHero.png",
+          "description": "2MP Indoor Wi-Fi Pan & Tilt Network Camera, model Hero H2A.",
+          "sku": "Hero H2A",
+          "barcode": "",
+          "stock": 7,
+          "category": "cctv"
+        },
+        {
+          "id": "dahua-xvr1b08h-i",
+          "name": "Dahua Hybrid Video Recorder DH-XVR1B08H-I 8-Channel",
+          "price": 70.00,
+          "image": "/images/products/dahuahybrid.png",
+          "description": "Hybrid Video Recorder, 8 channels, model DH-XVR1B08H-I.",
+          "sku": "DH-XVR1B08H-I",
+          "barcode": "",
+          "stock": 5,
+          "category": "cctv"
+        },
+        {
+          "id": "dahua-ups-600va",
+          "name": "Dahua Line Interactive UPS 600VA | 360Watt | DH-PFM350-360-A",
+          "price": 30.00,
+          "salePrice": 26.00,
+          "image": "/images/products/dahualineups.png",
+          "description": "Line Interactive UPS 600VA, 360Watt, model DH-PFM350-360-A.",
+          "sku": "DH-PFM350-360-A",
+          "barcode": "",
+          "stock": 4,
+          "category": "cctv"
+        },
+        {
+          "id": "dahua-bullet-2mp",
+          "name": "Dahua Bullet Network Camera 2MP 3.6mm DH-IPC-HFW1230S-S5",
+          "price": 35.00,
+          "image": "/images/products/dahuabullet.png",
+          "description": "2MP Bullet Network Camera, 3.6mm, model DH-IPC-HFW1230S-S5.",
+          "sku": "DH-IPC-HFW1230S-S5",
+          "barcode": "",
+          "stock": 8,
+          "category": "cctv"
+        },
+        {
+          "id": "dahua-dome-2mp",
+          "name": "Dahua Dome Network Camera 2MP 2.8MM DH-IPC-HDW1239T1-A-LED S5",
+          "price": 39.00,
+          "image": "/images/products/dahuadome2mp.png",
+          "description": "2MP Dome Network Camera, 2.8mm, model DH-IPC-HDW1239T1-A-LED S5.",
+          "sku": "DH-IPC-HDW1239T1-A-LED S5",
+          "barcode": "",
+          "stock": 6,
+          "category": "cctv"
+        },
+        {
+          "id": "dahua-ups-1500va",
+          "name": "Dahua Line Interactive UPS 1500VA | 900Watt | DH-PFM350-900-A | X2 Batteries 12V 9Amp",
+          "price": 80.00,
+          "image": "/images/products/dahualineups.png",
+          "description": "Line Interactive UPS 1500VA, 900Watt, model DH-PFM350-900-A, with 2x 12V 9Amp batteries.",
+          "sku": "DH-PFM350-900-A",
+          "barcode": "",
+          "stock": 2,
+          "category": "cctv"
+        },
+        {
+          "id": "dahua-bullet-4mp",
+          "name": "Dahua Bullet Network Camera 4MP 3.6MM DH-IPC-HFW1439S1-LED",
+          "price": 49.00,
+          "image": "/images/products/dahuabullet4mp.png",
+          "description": "4MP Bullet Network Camera, 3.6mm, model DH-IPC-HFW1439S1-LED.",
+          "sku": "DH-IPC-HFW1439S1-LED",
+          "barcode": "",
+          "stock": 0,
+          "category": "cctv"
+        },
+        {
+          "id": "dahua-xvr1b16h-i",
+          "name": "Dahua Hybrid Video Recorder XVR1B16H-I 16 Channel + 8 IP Full HD",
+          "price": 159.84,
+          "image": "/images/products/dahuahybrid.png",
+          "description": "Hybrid Video Recorder, 16 channels + 8 IP, model XVR1B16H-I.",
+          "sku": "XVR1B16H-I",
+          "barcode": "",
+          "stock": 0,
+          "category": "cctv"
+        },
+        {
+          "id": "dahua-dome-hdcvi-2mp",
+          "name": "Dahua 2MP HDCVI Dome Camera 3.6mm HAC-T1A21-U",
+          "price": 25.00,
+          "image": "/images/products/dahuadomehdcvi.png",
+          "description": "2MP HDCVI Dome Camera, 3.6mm, model HAC-T1A21-U.",
+          "sku": "HAC-T1A21-U",
+          "barcode": "",
+          "stock": 0,
+          "category": "cctv"
+        },
+        {
+          "id": "dahua-dome-4mp",
+          "name": "Dahua Dome Network Camera 4MP 2.8MM DH-IPC-HDW1439T1-A-LED",
+          "price": 49.00,
+          "image": "/images/products/dahuadome4mp.png",
+          "description": "4MP Dome Network Camera, 2.8mm, model DH-IPC-HDW1439T1-A-LED.",
+          "sku": "DH-IPC-HDW1439T1-A-LED",
+          "barcode": "",
+          "stock": 0,
+          "category": "cctv"
+        },
+        {
+          "id": "dahua-nvr-4116hs",
+          "name": "Dahua Network Video Recorder 16Channel up to 12MP DHI-NVR4116HS-2N-4KS3",
+          "price": 115.00,
+          "image": "/images/products/dahuaNVR16CH.png",
+          "description": "Network Video Recorder, 16 channels, up to 12MP, model DHI-NVR4116HS-2N-4KS3.",
+          "sku": "DHI-NVR4116HS-2N-4KS3",
+          "barcode": "",
+          "stock": 0,
+          "category": "cctv"
+        }
+      ]
+    },
+    "network-solution": {
+      "title": "Network Solutions",
+      "description": "Complete networking infrastructure and connectivity solutions",
+      "products": [
+        {
+          "id": "cisco-router-2900",
+          "name": "Cisco Router 2900",
+          "price": 450.00,
+          "salePrice": 399.00,
+          "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80",
+          "description": "Enterprise-grade router with advanced security features",
+          "features": [
+            "Gigabit Ethernet",
+            "Advanced security",
+            "VPN support",
+            "Modular design"
+          ],
+          "sku": "CISCO-2900",
+          "barcode": "1234567890123",
+          "stock": 5,
+          "category": "network-solution"
+        },
+        {
+          "id": "tp-link-switch-24port",
+          "name": "TP-Link Switch 24-Port",
+          "price": 180.00,
+          "salePrice": 159.00,
+          "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80",
+          "description": "24-port gigabit managed switch for small businesses",
+          "features": [
+            "24 Gigabit ports",
+            "Managed switch",
+            "Rack mountable",
+            "Energy efficient"
+          ],
+          "sku": "TPLINK-24G",
+          "barcode": "2345678901234",
+          "stock": 8,
+          "category": "network-solution"
+        }
+      ]
+    },
+    "softwares": {
+      "title": "Software Solutions",
+      "description": "Custom software development and business applications",
+      "products": [
+        {
+          "id": "inventory-management-system",
+          "name": "Inventory Management System",
+          "price": "$2,500",
+          "image": "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=400&q=80",
+          "description": "Complete inventory tracking and management solution",
+          "category": "softwares"
+        },
+        {
+          "id": "point-of-sale-pos",
+          "name": "Point of Sale (POS)",
+          "price": "$1,800",
+          "image": "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=400&q=80",
+          "description": "Modern POS system with payment integration",
+          "category": "softwares"
+        }
+      ]
+    },
+    "computer-laptops": {
+      "title": "Computers & Laptops",
+      "description": "High-quality computers, laptops, and accessories",
+      "products": [
+        {
+          "id": "dell-optiplex-7090",
+          "name": "Dell OptiPlex 7090",
+          "price": "$850",
+          "image": "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=400&q=80",
+          "description": "Business desktop with Intel i7, 16GB RAM, 512GB SSD",
+          "category": "computer-laptops"
+        },
+        {
+          "id": "hp-elitebook-840",
+          "name": "HP EliteBook 840",
+          "price": "$1,200",
+          "image": "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=400&q=80",
+          "description": "Professional laptop with 14\" display and long battery",
+          "category": "computer-laptops"
+        }
+      ]
+    },
+    "satellite": {
+      "title": "Satellite Solutions",
+      "description": "Satellite communication and broadcasting equipment",
+      "products": [
+        {
+          "id": "satellite-dish-1-2m",
+          "name": "Satellite Dish 1.2m",
+          "price": "$180",
+          "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=400&q=80",
+          "description": "1.2 meter satellite dish for TV reception",
+          "category": "satellite"
+        },
+        {
+          "id": "satellite-receiver-hd",
+          "name": "Satellite Receiver HD",
+          "price": "$85",
+          "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=400&q=80",
+          "description": "High-definition satellite receiver with recording",
+          "category": "satellite"
+        }
+      ]
+    },
+    "fiber-solution": {
+      "title": "Fiber Solutions",
+      "description": "Fiber optic networking and connectivity solutions",
+      "products": [
+        {
+          "id": "fiber-optic-cable-100m",
+          "name": "Fiber Optic Cable 100m",
+          "price": "$120",
+          "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80",
+          "description": "100-meter single-mode fiber optic cable",
+          "category": "fiber-solution"
+        },
+        {
+          "id": "fiber-splicing-machine",
+          "name": "Fiber Splicing Machine",
+          "price": "$2,500",
+          "image": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80",
+          "description": "Professional fiber optic splicing equipment",
+          "category": "fiber-solution"
+        }
+      ]
+    },
+    "interphone-solution": {
+      "title": "Interphone Solutions",
+      "description": "Professional intercom and communication systems",
+      "products": [
+        {
+          "id": "door-entry-system",
+          "name": "Door Entry System",
+          "price": "$280",
+          "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80",
+          "description": "Video door entry system with camera and speaker",
+          "category": "interphone-solution"
+        },
+        {
+          "id": "intercom-panel-4way",
+          "name": "Intercom Panel 4-Way",
+          "price": "$150",
+          "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80",
+          "description": "4-way intercom panel for buildings",
+          "category": "interphone-solution"
+        }
+      ]
+    },
+    "3d-printers-cnc": {
+      "title": "3D Printers & CNC",
+      "description": "3D printing and CNC machining solutions",
+      "products": [
+        {
+          "id": "creality-ender-3-v2",
+          "name": "Creality Ender 3 V2",
+          "price": "$280",
+          "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80",
+          "description": "Popular 3D printer with 220x220x250mm build volume",
+          "category": "3d-printers-cnc"
+        },
+        {
+          "id": "prusa-i3-mk3s-plus",
+          "name": "Prusa i3 MK3S+",
+          "price": "$750",
+          "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80",
+          "description": "High-quality 3D printer with auto-bed leveling",
+          "category": "3d-printers-cnc"
+        }
+      ]
+    },
+    "automation-system": {
+      "title": "Automation System",
+      "description": "Smart automation and control systems for modern homes and businesses",
+      "products": [
+        {
+          "id": "tuya-smart-switch",
+          "name": "Tuya Smart Switch",
+          "price": "$25",
+          "image": "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?auto=format&fit=crop&w=400&q=80",
+          "description": "WiFi-enabled smart switch with voice control",
+          "category": "automation-system"
+        },
+        {
+          "id": "tuya-smart-thermostat",
+          "name": "Tuya Smart Thermostat",
+          "price": "$89",
+          "image": "https://images.unsplash.com/photo-1545259741-2ea3ebf61fa3?auto=format&fit=crop&w=400&q=80",
+          "description": "Programmable smart thermostat with app control",
+          "category": "automation-system"
+        }
+      ]
+    }
+  }
+} 
