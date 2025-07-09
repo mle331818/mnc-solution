@@ -3,6 +3,7 @@
     "cctv": {
       "title": "CCTV Systems",
       "description": "Professional security cameras and surveillance systems",
+      "image": "/images/categories/cctv.jpg",
       "products": [
         {
           "id": "dahua-ups-800va",
@@ -189,6 +190,7 @@
     "network-solution": {
       "title": "Network Solutions",
       "description": "Complete networking infrastructure and connectivity solutions",
+      "image": "/images/categories/network-solution.jpg",
       "products": [
         {
           "id": "cisco-router-2900",
@@ -231,6 +233,7 @@
     "softwares": {
       "title": "Software Solutions",
       "description": "Custom software development and business applications",
+      "image": "/images/categories/softwares.jpg",
       "products": [
         {
           "id": "inventory-management-system",
@@ -253,6 +256,7 @@
     "computer-laptops": {
       "title": "Computers & Laptops",
       "description": "High-quality computers, laptops, and accessories",
+      "image": "/images/categories/computer-laptops.jpg",
       "products": [
         {
           "id": "dell-optiplex-7090",
@@ -275,6 +279,7 @@
     "satellite": {
       "title": "Satellite Solutions",
       "description": "Satellite communication and broadcasting equipment",
+      "image": "/images/categories/satellite.jpg",
       "products": [
         {
           "id": "satellite-dish-1-2m",
@@ -297,6 +302,7 @@
     "fiber-solution": {
       "title": "Fiber Solutions",
       "description": "Fiber optic networking and connectivity solutions",
+      "image": "/images/categories/fiber-solution.jpg",
       "products": [
         {
           "id": "fiber-optic-cable-100m",
@@ -319,6 +325,7 @@
     "interphone-solution": {
       "title": "Interphone Solutions",
       "description": "Professional intercom and communication systems",
+      "image": "/images/categories/interphone-solution.jpg",
       "products": [
         {
           "id": "door-entry-system",
@@ -341,6 +348,7 @@
     "3d-printers-cnc": {
       "title": "3D Printers & CNC",
       "description": "3D printing and CNC machining solutions",
+      "image": "/images/categories/3d-printers-cnc.jpg",
       "products": [
         {
           "id": "creality-ender-3-v2",
@@ -363,6 +371,7 @@
     "automation-system": {
       "title": "Automation System",
       "description": "Smart automation and control systems for modern homes and businesses",
+      "image": "/images/categories/automation-system.jpg",
       "products": [
         {
           "id": "tuya-smart-switch",
