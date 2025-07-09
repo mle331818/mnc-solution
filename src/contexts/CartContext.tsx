@@ -3,7 +3,7 @@ import { Product } from '../components/ProductForm';
 
 interface CartItem extends Product {
   quantity: number;
-  _id: string;
+  id: string; // Make id required for CartItem
 }
 
 interface CartState {
@@ -25,13 +25,18 @@ const CartContext = createContext<{
 const cartReducer = (state: CartState, action: CartAction): CartState => {
   switch (action.type) {
     case 'ADD_TO_CART': {
-      const existingItem = state.items.find(item => item._id === action.payload._id);
+      // Ensure the product has an id (fallback to _id if present)
+      const productWithId = {
+        ...action.payload,
+        id: action.payload.id || (action.payload as any)._id,
+      };
+      const existingItem = state.items.find(item => item.id === productWithId.id);
       
       if (existingItem) {
         return {
           ...state,
           items: state.items.map(item =>
-            item._id === action.payload._id
+            item.id === productWithId.id
               ? { ...item, quantity: item.quantity + 1 }
               : item
           ),
@@ -40,29 +45,29 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       } else {
         return {
           ...state,
-          items: [...state.items, { ...action.payload, quantity: 1 }],
+          items: [...state.items, { ...productWithId, quantity: 1 }],
           totalItems: state.totalItems + 1
         };
       }
     }
     
     case 'REMOVE_FROM_CART': {
-      const item = state.items.find(item => item._id === action.payload);
+      const item = state.items.find(item => item.id === action.payload);
       return {
         ...state,
-        items: state.items.filter(item => item._id !== action.payload),
+        items: state.items.filter(item => item.id !== action.payload),
         totalItems: state.totalItems - (item?.quantity || 0)
       };
     }
     
     case 'UPDATE_QUANTITY': {
-      const item = state.items.find(item => item._id === action.payload._id);
+      const item = state.items.find(item => item.id === action.payload.id);
       const quantityDiff = action.payload.quantity - (item?.quantity || 0);
       
       if (action.payload.quantity <= 0) {
         return {
           ...state,
-          items: state.items.filter(item => item._id !== action.payload._id),
+          items: state.items.filter(item => item.id !== action.payload.id),
           totalItems: state.totalItems - (item?.quantity || 0)
         };
       }
@@ -70,7 +75,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       return {
         ...state,
         items: state.items.map(item =>
-          item._id === action.payload._id
+          item.id === action.payload.id
             ? { ...item, quantity: action.payload.quantity }
             : item
         ),
