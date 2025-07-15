@@ -349,14 +349,15 @@ const CategoryDetail = () => {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {filteredProducts.map((product) => {
-                  console.log('Rendering product:', product.name, product._id);
+                  console.log('Rendering product:', product.name, product._id || product.id);
+                  const productId = product._id || product.id;
                   const salePercentage = product.salePrice && product.price > product.salePrice 
                     ? Math.round(((product.price - product.salePrice) / product.price) * 100)
                     : 0;
                   const isLowStock = product.stock !== undefined && product.stock <= 5;
 
                   return (
-                  <div key={product._id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
+                  <div key={productId} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
                     <div className="relative">
                       <img
                         src={product.image}
@@ -391,7 +392,7 @@ const CategoryDetail = () => {
                             Add to Cart
                           </button>
                           <Link
-                            to={`/products/${category}/${product._id}`}
+                            to={`/products/${category}/${productId}`}
                             className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
                           >
                             View Details
