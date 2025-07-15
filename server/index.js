@@ -10,7 +10,17 @@ const app = express();
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
     ? ['https://mnc-solution.vercel.app', 'https://mnc-solution.com']
-    : ['http://localhost:3000', 'http://localhost:8080', 'http://localhost:8081', 'http://127.0.0.1:3000', 'http://127.0.0.1:8080', 'http://127.0.0.1:8081'],
+    : [
+        'http://localhost:3000', 
+        'http://localhost:8080', 
+        'http://localhost:8081', 
+        'http://127.0.0.1:3000', 
+        'http://127.0.0.1:8080', 
+        'http://127.0.0.1:8081',
+        'http://192.168.0.113:3000',
+        'http://192.168.0.113:8080',
+        'http://192.168.0.113:8081'
+      ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -57,8 +67,8 @@ app.use("*", (req, res) => {
 
 // For local development
 if (process.env.NODE_ENV !== 'production') {
-  const PORT = process.env.PORT || 4000;
-  app.listen(PORT, () => console.log(`API running on http://localhost:${PORT}`));
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, '0.0.0.0', () => console.log(`API running on http://localhost:${PORT} and http://192.168.0.113:${PORT}`));
 }
 
 // For Vercel serverless
