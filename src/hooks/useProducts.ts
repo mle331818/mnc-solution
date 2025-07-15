@@ -69,17 +69,15 @@ export const useProducts = () => {
     hasPrev: false
   });
 
-  // Load initial data with retry logic
+  // Load initial data
   useEffect(() => {
     loadInitialData();
   }, []);
 
-  const loadInitialData = async (retryCount = 0) => {
+  const loadInitialData = async () => {
     try {
       setLoading(true);
       setError(null);
-
-      console.log('Attempting to load data, attempt:', retryCount + 1);
 
       // Load products, categories, and brands in parallel
       const [productsResponse, categoriesData, brandsData] = await Promise.all([
@@ -92,23 +90,9 @@ export const useProducts = () => {
       setCategories(categoriesData);
       setBrands(brandsData);
       setPagination(productsResponse.pagination);
-      
-      console.log('Data loaded successfully:', {
-        productsCount: productsResponse.products.length,
-        categoriesCount: categoriesData.length,
-        brandsCount: brandsData.length
-      });
     } catch (err) {
-      console.error('Error loading products (attempt', retryCount + 1, '):', err);
-      
-      // Retry logic for network issues
-      if (retryCount < 2) {
-        console.log('Retrying in 2 seconds...');
-        setTimeout(() => loadInitialData(retryCount + 1), 2000);
-        return;
-      }
-      
-      setError(err instanceof Error ? err.message : 'Failed to load products. Please check your internet connection and try again.');
+      setError(err instanceof Error ? err.message : 'Failed to load products');
+      console.error('Error loading products:', err);
     } finally {
       setLoading(false);
     }
@@ -125,7 +109,6 @@ export const useProducts = () => {
       const response = await fetchProductsByCategory(category, { page: page.toString(), limit: limit.toString() });
       return response;
     } catch (err) {
-      console.error('Error fetching products by category:', err);
       throw new Error(err instanceof Error ? err.message : 'Failed to fetch products by category');
     }
   };
@@ -149,7 +132,6 @@ export const useProducts = () => {
       const response = await searchProducts(query, { page: page.toString(), limit: limit.toString() });
       return response;
     } catch (err) {
-      console.error('Error searching products:', err);
       throw new Error(err instanceof Error ? err.message : 'Failed to search products');
     }
   };
