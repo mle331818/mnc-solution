@@ -37,9 +37,27 @@ export interface CategoryInfo {
 // Fetch all products with optional filters
 export async function fetchProducts(params: Record<string, string> = {}) {
   const query = new URLSearchParams(params).toString();
-  const res = await fetch(`${API_BASE}/api/products${query ? `?${query}` : ''}`);
-  if (!res.ok) throw new Error('Failed to fetch products');
-  return res.json() as Promise<ProductsResponse>;
+  const url = `${API_BASE}/api/products${query ? `?${query}` : ''}`;
+  
+  console.log('Fetching products from:', url);
+  
+  try {
+    const res = await fetch(url);
+    console.log('Products response status:', res.status);
+    
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error('Products API error:', errorText);
+      throw new Error(`Failed to fetch products: ${res.status} ${errorText}`);
+    }
+    
+    const data = await res.json();
+    console.log('Products data received:', data.products?.length || 0, 'products');
+    return data as ProductsResponse;
+  } catch (error) {
+    console.error('Products fetch error:', error);
+    throw error;
+  }
 }
 
 // Fetch a single product by ID

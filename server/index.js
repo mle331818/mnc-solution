@@ -9,9 +9,11 @@ const app = express();
 // Middleware
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://mnc-solution.vercel.app', 'https://mnc-solution.com']
+    ? ['https://mnc-solution.vercel.app', 'https://mnc-solution.com', 'https://*.vercel.app']
     : ['http://localhost:3000', 'http://localhost:8080', 'http://localhost:8081'],
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json({ limit: "10mb" }));
 app.use(morgan("dev"));
