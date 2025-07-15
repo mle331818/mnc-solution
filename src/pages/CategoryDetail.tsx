@@ -26,6 +26,11 @@ const CategoryDetail = () => {
 
   const currentCategory = getCategoryInfo(category || '');
 
+  // Simple test to see if component loads
+  console.log('CategoryDetail component loaded');
+  console.log('Category param:', category);
+  console.log('User agent:', navigator.userAgent);
+
   // Load products for the category
   useEffect(() => {
     const loadData = async () => {
@@ -151,6 +156,13 @@ const CategoryDetail = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <Header />
+      
+      {/* Test Message - Remove after debugging */}
+      <div className="bg-red-500 text-white p-4 text-center">
+        <strong>TEST: CategoryDetail Component Loaded</strong><br/>
+        Category: {category}<br/>
+        User Agent: {navigator.userAgent.substring(0, 50)}...
+      </div>
       
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white py-16 relative overflow-hidden">
