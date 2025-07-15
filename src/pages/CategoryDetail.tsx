@@ -316,6 +316,28 @@ const CategoryDetail = () => {
       {/* Products Grid */}
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Debug Info - Remove this after testing */}
+          <div className="mb-8 p-4 bg-yellow-100 rounded-lg">
+            <h3 className="font-bold text-yellow-800">Debug Info:</h3>
+            <p>Category: {category}</p>
+            <p>Total Products: {products.length}</p>
+            <p>Filtered Products: {filteredProducts.length}</p>
+            <p>Search Term: "{searchTerm}"</p>
+            <p>Active Filters: {JSON.stringify({
+              showDahuaOnly,
+              showHikvisionOnly,
+              showXiaomiOnly,
+              showTplinkOnly,
+              showTuyaOnly
+            })}</p>
+            <div className="mt-2">
+              <strong>Raw Products:</strong>
+              <pre className="text-xs bg-white p-2 rounded mt-1 overflow-auto">
+                {JSON.stringify(products.slice(0, 2), null, 2)}
+              </pre>
+            </div>
+          </div>
+
           {(() => {
             console.log('Rendering products section:');
             console.log('- Total products:', products.length);
