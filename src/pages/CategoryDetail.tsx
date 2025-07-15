@@ -33,12 +33,23 @@ const CategoryDetail = () => {
         setLoading(true);
         setError(null);
 
+        console.log('Loading products for category:', category);
+        console.log('API Base URL:', import.meta.env.VITE_API_BASE || 'default');
+
         if (category) {
           const productsResponse = await fetchProductsByCategory(category);
+          console.log('Products response:', productsResponse);
+          console.log('Products count:', productsResponse.products?.length || 0);
           setProducts(productsResponse.products || []);
         }
       } catch (err) {
         console.error('Error loading products:', err);
+        console.error('Error details:', {
+          message: err instanceof Error ? err.message : 'Unknown error',
+          stack: err instanceof Error ? err.stack : 'No stack trace',
+          userAgent: navigator.userAgent,
+          url: window.location.href
+        });
         setError('Failed to load products');
       } finally {
         setLoading(false);
@@ -305,32 +316,46 @@ const CategoryDetail = () => {
       {/* Products Grid */}
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {filteredProducts.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="text-gray-500 text-xl mb-4">No products found</div>
-              <button
-                onClick={() => {
-                  setSearchTerm('');
-                  setShowDahuaOnly(false);
-                  setShowHikvisionOnly(false);
-                  setShowXiaomiOnly(false);
-                  setShowTplinkOnly(false);
-                  setShowTuyaOnly(false);
-                }}
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
-              >
-                Clear Filters
-              </button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredProducts.map((product) => {
-                const salePercentage = product.salePrice && product.price > product.salePrice 
-                  ? Math.round(((product.price - product.salePrice) / product.price) * 100)
-                  : 0;
-                const isLowStock = product.stock !== undefined && product.stock <= 5;
+          {(() => {
+            console.log('Rendering products section:');
+            console.log('- Total products:', products.length);
+            console.log('- Filtered products:', filteredProducts.length);
+            console.log('- Search term:', searchTerm);
+            console.log('- Active filters:', {
+              showDahuaOnly,
+              showHikvisionOnly,
+              showXiaomiOnly,
+              showTplinkOnly,
+              showTuyaOnly
+            });
+            
+            return filteredProducts.length === 0 ? (
+              <div className="text-center py-12">
+                <div className="text-gray-500 text-xl mb-4">No products found</div>
+                <button
+                  onClick={() => {
+                    setSearchTerm('');
+                    setShowDahuaOnly(false);
+                    setShowHikvisionOnly(false);
+                    setShowXiaomiOnly(false);
+                    setShowTplinkOnly(false);
+                    setShowTuyaOnly(false);
+                  }}
+                  className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
+                >
+                  Clear Filters
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {filteredProducts.map((product) => {
+                  console.log('Rendering product:', product.name, product._id);
+                  const salePercentage = product.salePrice && product.price > product.salePrice 
+                    ? Math.round(((product.price - product.salePrice) / product.price) * 100)
+                    : 0;
+                  const isLowStock = product.stock !== undefined && product.stock <= 5;
 
-                return (
+                  return (
                   <div key={product._id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group">
                     <div className="relative">
                       <img
@@ -446,7 +471,7 @@ const CategoryDetail = () => {
                 );
               })}
             </div>
-          )}
+          )})()}
         </div>
       </section>
     </div>
