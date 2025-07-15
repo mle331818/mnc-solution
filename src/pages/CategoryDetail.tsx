@@ -20,9 +20,9 @@ const CategoryDetail = () => {
   const [showTplinkOnly, setShowTplinkOnly] = useState(false);
   const [showTuyaOnly, setShowTuyaOnly] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
 
   const currentCategory = getCategoryInfo(category || '');
 
@@ -162,6 +162,14 @@ const CategoryDetail = () => {
         <strong>TEST: CategoryDetail Component Loaded</strong><br/>
         Category: {category}<br/>
         User Agent: {navigator.userAgent.substring(0, 50)}...
+      </div>
+      
+      {/* Simple Loading Test */}
+      <div className="bg-blue-500 text-white p-4 text-center">
+        <strong>Loading Test</strong><br/>
+        Products Count: {products.length}<br/>
+        Loading: {loading ? 'Yes' : 'No'}<br/>
+        Error: {error || 'None'}
       </div>
       
       {/* Hero Section */}

@@ -32,6 +32,12 @@ export default defineConfig(({ mode }) => ({
         },
       },
     },
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: false, // Keep console logs for debugging
+      },
+    },
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom'],
