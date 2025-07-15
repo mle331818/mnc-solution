@@ -79,9 +79,6 @@ export const useProducts = () => {
       setLoading(true);
       setError(null);
 
-      console.log('Loading products from:', import.meta.env.VITE_API_BASE || 'default');
-      console.log('Current location:', window.location.origin);
-
       // Load products, categories, and brands in parallel
       const [productsResponse, categoriesData, brandsData] = await Promise.all([
         fetchProducts({ limit: '100' }),
@@ -89,24 +86,13 @@ export const useProducts = () => {
         fetchBrands()
       ]);
 
-      console.log('Products loaded:', productsResponse.products.length);
-      console.log('Categories loaded:', categoriesData.length);
-      console.log('Brands loaded:', brandsData.length);
-
       setProducts(productsResponse.products);
       setCategories(categoriesData);
       setBrands(brandsData);
       setPagination(productsResponse.pagination);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load products';
-      setError(errorMessage);
+      setError(err instanceof Error ? err.message : 'Failed to load products');
       console.error('Error loading products:', err);
-      console.error('Error details:', {
-        message: errorMessage,
-        stack: err instanceof Error ? err.stack : 'No stack trace',
-        userAgent: navigator.userAgent,
-        url: window.location.href
-      });
     } finally {
       setLoading(false);
     }

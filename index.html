@@ -23,52 +23,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <style>
-      .mobile-test {
-        background: red;
-        color: white;
-        padding: 20px;
-        text-align: center;
-        font-size: 18px;
-        font-weight: bold;
-        margin: 20px;
-        border-radius: 10px;
-      }
-      .static-test {
-        background: blue;
-        color: white;
-        padding: 20px;
-        text-align: center;
-        font-size: 18px;
-        font-weight: bold;
-        margin: 20px;
-        border-radius: 10px;
-      }
-    </style>
   </head>
 
   <body class="font-sans antialiased">
-    <!-- Static HTML Test - Should always show -->
-    <div class="static-test">
-      STATIC HTML TEST: This should always be visible<br/>
-      Deployed: 2025-01-15 21:45:00
-    </div>
-    
     <div id="root"></div>
-    
-    <!-- Mobile JavaScript Test -->
-    <div class="mobile-test" id="mobile-test">
-      Loading JavaScript test...
-    </div>
-    
-    <script>
-      // Basic JavaScript test
-      console.log('Basic JavaScript test loaded');
-      document.getElementById('mobile-test').innerHTML = 
-        'JavaScript works! User Agent: ' + navigator.userAgent.substring(0, 50) + '...';
-    </script>
-    
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
