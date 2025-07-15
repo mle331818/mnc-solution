@@ -10,7 +10,7 @@ cd /d "%~dp0"
 
 echo.
 echo [1/2] Starting Backend Server (API)...
-start "MNC Backend" cmd /k "npm run server"
+start "MNC Backend" cmd /k "cd backend && npm run dev"
 
 echo.
 echo [2/2] Starting Frontend Server (UI)...

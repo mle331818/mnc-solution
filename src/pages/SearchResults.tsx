@@ -95,9 +95,9 @@ const SearchResults = () => {
                 <p className="text-sm text-gray-600 mb-2">{product.category}</p>
                 <p className="text-blue-600 font-semibold">${product.price}</p>
               </div>
-            </div>
-          ))}
-        </div>
+              </div>
+            ))}
+          </div>
       ) : (
         <div className="text-center py-8">
           <p className="text-gray-600">No products found matching your search.</p>

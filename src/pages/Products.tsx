@@ -86,7 +86,7 @@ const Products = () => {
 
   // Get all products and calculate category stats
   const allProducts = getAllProducts();
-  
+
   // Calculate item counts and sale info for each category
   const categoryStats = productCategories.reduce((acc, category) => {
     const categoryProducts = allProducts.filter(p => p.category === category.slug);
@@ -200,29 +200,29 @@ const Products = () => {
               const onSaleItems = stats?.onSale || 0;
               
               return (
-                <Link
-                  key={index}
-                  to={`/products/${category.slug}`}
+              <Link
+                key={index}
+                to={`/products/${category.slug}`}
                   className="group bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500 hover:scale-105 cursor-pointer transform hover:-translate-y-2 border border-gray-100 relative"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
                   {/* Modern Gradient Overlay */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${getCategoryGradient(category.color)} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
                   
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={category.image}
-                      alt={category.name}
-                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                      onError={(e) => {
-                        e.currentTarget.src = '/images/placeholder.svg';
-                      }}
-                    />
+                <div className="relative overflow-hidden">
+                  <img
+                    src={category.image}
+                    alt={category.name}
+                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                    onError={(e) => {
+                      e.currentTarget.src = '/images/placeholder.svg';
+                    }}
+                  />
                     
                     {/* Dynamic Count Badge */}
                     <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm text-gray-900 px-3 py-1.5 rounded-full text-sm font-bold shadow-lg border border-gray-200">
                       {totalItems} {totalItems === 1 ? 'item' : 'items'}
-                    </div>
+                  </div>
                     
                     {/* Sale Badge */}
                     {onSaleItems > 0 && (
@@ -231,24 +231,24 @@ const Products = () => {
                         {onSaleItems} on sale
                       </div>
                     )}
-                    
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
-                  </div>
                   
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300"></div>
+                </div>
+                
                   <div className="p-6 relative z-10">
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
-                        {category.name}
-                      </h3>
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                      {category.name}
+                    </h3>
                       <div className="flex items-center space-x-2">
-                        <FaArrowRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-300" />
+                    <FaArrowRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-300" />
                       </div>
-                    </div>
-                    <p className="text-gray-600 leading-relaxed mb-4">
-                      {category.description}
-                    </p>
-                    
+                  </div>
+                  <p className="text-gray-600 leading-relaxed mb-4">
+                    {category.description}
+                  </p>
+                  
                     {/* Modern Stats Row */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-3">
@@ -267,9 +267,9 @@ const Products = () => {
                       <div className={`px-3 py-1.5 rounded-full text-xs font-medium bg-gradient-to-r ${getCategoryGradient(category.color)} text-white shadow-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300`}>
                         Explore
                       </div>
-                    </div>
                   </div>
-                </Link>
+                </div>
+              </Link>
               );
             })}
           </div>
