@@ -1,11 +1,7 @@
 @echo off
-echo 🔄 Restarting Backend Server...
-echo.
+echo Stopping any existing backend processes...
+taskkill /f /im node.exe 2>nul
 
-echo 🛑 Stopping any existing Node.js processes...
-taskkill /f /im node.exe >nul 2>&1
-
-echo.
-echo 🚀 Starting backend server with updated CORS...
-cd backend
-node server.js 
+echo Starting backend server on port 4000...
+cd server
+node index.js 
