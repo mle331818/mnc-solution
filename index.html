@@ -32,11 +32,28 @@
         text-align: center;
         font-size: 18px;
         font-weight: bold;
+        margin: 20px;
+        border-radius: 10px;
+      }
+      .static-test {
+        background: blue;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        margin: 20px;
+        border-radius: 10px;
       }
     </style>
   </head>
 
   <body class="font-sans antialiased">
+    <!-- Static HTML Test - Should always show -->
+    <div class="static-test">
+      STATIC HTML TEST: This should always be visible
+    </div>
+    
     <div id="root"></div>
     
     <!-- Mobile JavaScript Test -->
